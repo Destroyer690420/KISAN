@@ -11,7 +11,7 @@ import { renderMembershipPage, attachMembershipListeners } from './pages/Members
 import { renderGiftCardPage, attachGiftCardListeners } from './pages/GiftCardPage.js';
 import { renderSupportPage } from './pages/SupportPage.js';
 import { renderTermsPage } from './pages/TermsPage.js';
-import { renderDemoWorkflowPage, attachDemoWorkflowListeners } from './pages/DemoWorkflowPage.js';
+import { renderDemoWorkflowPage, attachDemoWorkflowListeners, stopTrackingAutoAdvance } from './pages/DemoWorkflowPage.js';
 import { store } from './state/store.js';
 
 export function resolveRoute() {
@@ -23,6 +23,9 @@ export function resolveRoute() {
     const params = new URLSearchParams(queryString || '');
     const stepParam = parseInt(params.get('step'), 10);
     if (stepParam && stepParam >= 1 && stepParam <= 7) {
+      if (stepParam === 7 && store.state.demoStep !== 7) {
+        store.state.demoTrackingStage = 1;
+      }
       store.state.demoStep = stepParam;
     }
     return {
@@ -31,6 +34,9 @@ export function resolveRoute() {
       attach: attachDemoWorkflowListeners
     };
   }
+
+  // Not on demo workflow route: cancel any tracking interval
+  stopTrackingAutoAdvance();
 
   if (pathname === '/' || pathname === '') {
     return {

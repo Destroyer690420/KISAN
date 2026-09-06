@@ -1234,22 +1234,15 @@ function renderStep7LiveTracking(product, logistics, currentStage, t, langCode) 
           <h2 style="font-size:1.85rem; font-weight:800; color:#1a2e2b; margin:0;">
             ${t.step7Heading}
           </h2>
-          <p style="font-size:0.95rem; color:#5c6c69; margin:0.3rem 0 0;">
-            ${t.step7Subheading}
-          </p>
         </div>
 
-        <!-- Interactive Simulation Buttons -->
-        <div style="display:flex; gap:0.5rem; align-items:center;">
-          <button id="demo-voice-status-btn" type="button" class="voice-audio-btn c-btn c-btn-outline c-btn-sm" style="font-weight:700; border-radius:8px; display:inline-flex; align-items:center; gap:5px;" title="Listen to current tracking milestone status">
-            ${IconVolume2(14)}
-            <span>${langCode === 'mr' ? 'स्टेटस ऐका' : langCode === 'hi' ? 'स्थिति सुनें' : langCode === 'pa' ? 'ਸਟੇਟਸ ਸੁਣੋ' : 'Listen Status'}</span>
-          </button>
-          <button id="demo-advance-stage-btn" type="button" class="c-btn c-btn-primary c-btn-sm" style="font-weight:700; padding:0.55rem 1rem; border-radius:8px; display:inline-flex; align-items:center; gap:6px;">
-            ${IconPlay(14)}
-            <span>${t.btnSimulateNext} (${currentStage}/8)</span>
-          </button>
-          <button id="demo-reset-stage-btn" type="button" class="c-btn c-btn-outline c-btn-sm" style="font-weight:600; padding:0.55rem 0.85rem; border-radius:8px;" title="Reset tracking to Stage 1">
+        <!-- Live Real-Time Auto-Advancing Pulse Indicator & Replay -->
+        <div style="display:flex; gap:0.6rem; align-items:center;">
+          <div style="background:${currentStage === 8 ? '#dcfce7' : '#eaf5f3'}; border:1px solid ${currentStage === 8 ? '#bbf7d0' : '#9ce9df'}; color:${currentStage === 8 ? '#15803d' : '#00665e'}; font-size:0.8rem; font-weight:800; padding:6px 14px; border-radius:999px; display:inline-flex; align-items:center; gap:8px;">
+            <span style="width:8px; height:8px; border-radius:50%; background:${currentStage === 8 ? '#16a34a' : '#00665e'}; display:inline-block; ${currentStage < 8 ? 'animation:pulse 1.5s infinite;' : ''}"></span>
+            <span>${currentStage === 8 ? 'Consignment Delivered & Paid (8/8)' : `Live Auto-Advancing (Stage ${currentStage}/8) · 3s`}</span>
+          </div>
+          <button id="demo-reset-stage-btn" type="button" class="c-btn c-btn-outline c-btn-sm" style="font-weight:600; padding:0.55rem 0.85rem; border-radius:8px;" title="Replay tracking from Stage 1">
             ${IconRotateCcw(13)}
           </button>
         </div>
@@ -1360,15 +1353,52 @@ function renderStep7LiveTracking(product, logistics, currentStage, t, langCode) 
   `;
 }
 
+// Tracking Interval ID for 3-second auto-advancing simulator
+let trackingIntervalId = null;
+
+export function stopTrackingAutoAdvance() {
+  if (trackingIntervalId) {
+    clearInterval(trackingIntervalId);
+    trackingIntervalId = null;
+  }
+}
+
 // -------------------------------------------------------------
 // EVENT LISTENERS FOR INTERACTIVE DEMO WORKFLOW
 // -------------------------------------------------------------
 export function attachDemoWorkflowListeners() {
+  // Always stop previous tracking timer before re-attaching listeners
+  stopTrackingAutoAdvance();
+
+  const state = store.getState();
+
+  // If currently on Step 7, automatically advance stage every 3 seconds until Stage 8
+  if (state.demoStep === 7 && state.demoTrackingStage < 8) {
+    trackingIntervalId = setInterval(() => {
+      const curr = store.getState();
+      if (curr.demoStep === 7 && curr.demoTrackingStage < 8) {
+        const next = curr.demoTrackingStage + 1;
+        store.setDemoTrackingStage(next);
+        if (next === 8) {
+          stopTrackingAutoAdvance();
+          store.showToast('Consignment Complete! Instant Direct DBT Payout Credited.', 'success');
+        }
+      } else {
+        stopTrackingAutoAdvance();
+      }
+    }, 3000);
+  }
+
   // Step Jump Buttons
   document.querySelectorAll('.demo-step-jump-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const stepTarget = parseInt(btn.dataset.step, 10);
       if (stepTarget) {
+        if (stepTarget === 7) {
+          store.setDemoTrackingStage(1);
+        } else {
+          stopTrackingAutoAdvance();
+        }
         store.setDemoStep(stepTarget);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
@@ -1677,26 +1707,26 @@ export function attachDemoWorkflowListeners() {
 
   // STEP 6: Total Profit Realization
   document.getElementById('demo-proceed-to-tracking-btn')?.addEventListener('click', () => {
+    store.setDemoTrackingStage(1);
     store.setDemoStep(7);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
   document.getElementById('demo-step6-back-btn')?.addEventListener('click', () => {
+    stopTrackingAutoAdvance();
     store.setDemoStep(5);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  // STEP 7: Amazon-Style Tracking Simulator
-  document.getElementById('demo-advance-stage-btn')?.addEventListener('click', () => {
-    store.advanceDemoTrackingStage();
-  });
-
+  // STEP 7: Real-Time Auto-Advancing Tracking Simulator
   document.getElementById('demo-reset-stage-btn')?.addEventListener('click', () => {
+    stopTrackingAutoAdvance();
     store.setDemoTrackingStage(1);
-    store.showToast('Tracking reset to Stage 1: Order Confirmed', 'info');
+    store.showToast('Tracking reset to Stage 1: Replaying live tracking...', 'info');
   });
 
   document.getElementById('demo-restart-entire-btn')?.addEventListener('click', () => {
+    stopTrackingAutoAdvance();
     store.resetDemoWorkflow();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
