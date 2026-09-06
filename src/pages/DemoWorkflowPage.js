@@ -546,7 +546,11 @@ function renderStep3ProduceAndForecast(product, t, langCode) {
 // -------------------------------------------------------------
 function renderStep4MarketNegotiation(product, negotiation, t) {
   const isAgreed = negotiation.status === 'agreed';
-  const isCountered = negotiation.status === 'countered';
+  const isCountering = negotiation.status === 'countering';
+  const isRejected = negotiation.status === 'rejected';
+  const counterVal = negotiation.farmerCounterPrice || 43;
+  const agreedVal = negotiation.agreedPrice || 43;
+  const agreedTotal = negotiation.totalAgreedAmount || (product.volume * agreedVal);
 
   return `
     <div>
@@ -628,77 +632,143 @@ function renderStep4MarketNegotiation(product, negotiation, t) {
           </div>
 
           <!-- Negotiation Message Thread -->
-          <div style="display:flex; flex-direction:column; gap:0.85rem; margin-bottom:1.5rem;">
+          <div id="demo-chat-thread" style="display:flex; flex-direction:column; gap:0.85rem; margin-bottom:1.5rem;">
             
-            <!-- Farmer Initial Asking Price -->
+            <!-- Message 1: Farmer Initial Asking Price -->
             <div style="align-self:flex-end; max-width:85%; background:#00665e; color:#ffffff; padding:0.85rem 1rem; border-radius:14px 14px 2px 14px; font-size:0.85rem; box-shadow:0 2px 8px rgba(0,102,94,0.2);">
               <div style="font-size:0.7rem; color:#9ce9df; font-weight:700; margin-bottom:2px;">Rajesh Patil (Farmer)</div>
               <div>Listed 500kg Grade-A Tomatoes @ <strong>₹${negotiation.farmerAskingPrice}/kg</strong> (Total: ₹${(product.volume * negotiation.farmerAskingPrice).toLocaleString('en-IN')}).</div>
             </div>
 
-            <!-- Buyer Initial Offer -->
-            <div style="align-self:flex-start; max-width:85%; background:#f1f5f9; color:#1e293b; padding:0.85rem 1rem; border-radius:14px 14px 14px 2px; font-size:0.85rem; border:1px solid #e2e8f0;">
-              <div style="font-size:0.7rem; color:#64748b; font-weight:700; margin-bottom:2px;">Subhash Commercial Kitchens (Buyer)</div>
-              <div>${t.buyerInitialMsg}</div>
-              <div style="margin-top:4px; font-size:0.75rem; color:#0284c7; font-weight:700;">
-                Buyer Initial Bid: ₹${(product.volume * negotiation.buyerInitialOffer).toLocaleString('en-IN')} (₹${negotiation.buyerInitialOffer}/kg)
+            <!-- Message 2: Buyer Initial Offer Message (Incoming Offer ₹41/kg) -->
+            <div style="align-self:flex-start; max-width:88%; background:#f1f5f9; color:#1e293b; padding:0.85rem 1rem; border-radius:14px 14px 14px 2px; font-size:0.85rem; border:1px solid #e2e8f0; box-shadow:0 2px 6px rgba(0,0,0,0.03);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <span style="font-size:0.72rem; color:#64748b; font-weight:700;">Subhash Commercial Kitchens (Buyer)</span>
+                <span style="background:#e0f2fe; color:#0369a1; font-size:0.68rem; font-weight:800; padding:1px 6px; border-radius:4px;">INCOMING OFFER</span>
+              </div>
+              <div style="line-height:1.45;">${t.buyerInitialMsg}</div>
+              <div style="margin-top:6px; padding-top:6px; border-top:1px solid #e2e8f0; font-size:0.8rem; color:#0284c7; font-weight:800; display:flex; justify-content:space-between; align-items:center;">
+                <span>Buyer Offer: ₹41/kg</span>
+                <span>Total: ₹${(product.volume * 41).toLocaleString('en-IN')}</span>
               </div>
             </div>
 
-            <!-- Counter-Offer Thread if Countered or Agreed -->
-            ${isCountered || isAgreed ? `
-              <div style="align-self:flex-end; max-width:85%; background:#004c46; color:#ffffff; padding:0.85rem 1rem; border-radius:14px 14px 2px 14px; font-size:0.85rem;">
+            <!-- Message 3: Farmer Counter Message (Shown if countered or agreed at ₹43) -->
+            ${isAgreed && agreedVal !== 41 ? `
+              <div style="align-self:flex-end; max-width:85%; background:#004c46; color:#ffffff; padding:0.85rem 1rem; border-radius:14px 14px 2px 14px; font-size:0.85rem; box-shadow:0 2px 8px rgba(0,76,70,0.2);">
                 <div style="font-size:0.7rem; color:#9ce9df; font-weight:700; margin-bottom:2px;">Rajesh Patil (Farmer)</div>
-                <div>${t.farmerCounterMsg}</div>
+                <div>"These are Grade-A vine-ripened tomatoes, no storage rot. My counter is ₹${counterVal}/kg. Deal?"</div>
               </div>
+            ` : ''}
 
-              <div style="align-self:flex-start; max-width:85%; background:#dcfce7; color:#166534; padding:0.85rem 1rem; border-radius:14px 14px 14px 2px; font-size:0.85rem; border:1px solid #bbf7d0;">
-                <div style="font-size:0.7rem; color:#15803d; font-weight:700; margin-bottom:2px;">Subhash Commercial Kitchens (Buyer)</div>
-                <div>${t.buyerAgreedMsg}</div>
+            <!-- Message 4: Buyer Acceptance Message (Shown when agreed) -->
+            ${isAgreed ? `
+              <div style="align-self:flex-start; max-width:88%; background:#dcfce7; color:#166534; padding:0.85rem 1rem; border-radius:14px 14px 14px 2px; font-size:0.85rem; border:1px solid #bbf7d0; box-shadow:0 2px 8px rgba(22,101,52,0.1);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
+                  <span style="font-size:0.72rem; color:#15803d; font-weight:700;">Subhash Commercial Kitchens (Buyer)</span>
+                  <span style="background:#22c55e; color:#ffffff; font-size:0.68rem; font-weight:800; padding:1px 6px; border-radius:4px;">OFFER ACCEPTED</span>
+                </div>
+                <div style="line-height:1.45;">${agreedVal === 41 ? t.buyerAcceptDirectMsg : `"Agreed! ₹${agreedVal}/kg for 500kg is fair. We have locked ₹${agreedTotal.toLocaleString('en-IN')} in Kisan Connect Escrow."`}</div>
               </div>
             ` : ''}
 
           </div>
 
-          <!-- Negotiation Action Box -->
+          <!-- Negotiation Action Console -->
           <div style="background:#ffffff; border:1px solid #d5e4e2; border-radius:14px; padding:1.25rem;">
             
-            ${!isAgreed ? `
-              <div style="margin-bottom:1rem;">
-                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.5rem;">
-                  <span style="font-weight:700; color:#1a2e2b;">${t.labelCounterPrice}</span>
-                  <span style="font-weight:800; color:#00665e;" id="demo-counter-preview-val">₹${negotiation.farmerCounterPrice} / kg (₹${(product.volume * negotiation.farmerCounterPrice).toLocaleString('en-IN')})</span>
+            ${!isAgreed && !isCountering ? `
+              <!-- Initial State: 3 Clickable Buttons for Farmer (Accept, Reject, Counter) -->
+              <div>
+                <div style="font-size:0.78rem; font-weight:700; color:#5c6c69; margin-bottom:0.75rem; text-transform:uppercase; letter-spacing:0.5px;">
+                  ${t.farmerActionPrompt}
                 </div>
-                <div style="display:flex; gap:8px;">
-                  <input type="number" id="demo-counter-price-input" value="${negotiation.farmerCounterPrice}" min="35" max="50" class="c-input" style="width:110px; font-weight:800; font-size:1rem; color:#00665e;">
-                  <button id="demo-submit-counter-btn" type="button" class="c-btn c-btn-primary" style="flex:1; font-weight:700;">
-                    ${t.btnSendCounter} (₹${negotiation.farmerCounterPrice}/kg)
-                  </button>
-                  <button id="demo-accept-initial-btn" type="button" class="c-btn c-btn-outline" style="font-weight:600; font-size:0.82rem;">
-                    ${t.btnAcceptInitial}
-                  </button>
-                </div>
-              </div>
-            ` : `
-              <!-- Finalized Deal Success Badge -->
-              <div style="background:#eaf5f3; border:2px solid #00665e; border-radius:12px; padding:1rem; margin-bottom:1.25rem; text-align:center;">
-                <div style="display:inline-flex; align-items:center; gap:6px; color:#00665e; font-weight:800; font-size:1rem; margin-bottom:0.25rem;">
-                  ${IconCheckCircle(20)}
-                  <span>${t.dealAgreedTitle}</span>
-                </div>
-                <div style="font-size:0.9rem; color:#2c3e3b;">
-                  ${t.dealTotalVal}
-                </div>
-                <div style="font-size:0.75rem; color:#00665e; font-weight:600; margin-top:0.25rem;">
-                  ${t.escrowLockedNote}
-                </div>
-              </div>
 
-              <button id="demo-proceed-to-logistics-btn" type="button" class="c-btn c-btn-primary c-btn-block c-btn-lg" style="font-weight:800; font-size:1.05rem; padding:0.9rem; border-radius:10px; box-shadow:0 4px 14px rgba(0,102,94,0.3); display:flex; align-items:center; justify-content:center; gap:8px;">
-                <span>${t.btnSellAndBookLogistics}</span>
-                ${IconArrowRight(18)}
-              </button>
-            `}
+                ${isRejected ? `
+                  <div style="background:#fff1f2; border:1px solid #fecdd3; border-radius:8px; padding:8px 12px; font-size:0.78rem; color:#be123c; margin-bottom:0.85rem; display:flex; align-items:center; gap:6px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                    <span>${t.rejectedNotice}</span>
+                  </div>
+                ` : ''}
+
+                <div style="display:grid; grid-template-columns:1fr 1fr 1.25fr; gap:10px;">
+                  <button id="demo-action-accept-btn" type="button" class="c-btn" style="background:#00665e; color:#ffffff; font-weight:700; padding:0.75rem 0.5rem; border-radius:10px; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; box-shadow:0 2px 6px rgba(0,102,94,0.2); transition:all 0.15s;">
+                    ${IconCheckCircle(16)}
+                    <span>${t.btnActionAccept}</span>
+                  </button>
+                  <button id="demo-action-reject-btn" type="button" class="c-btn" style="background:#fff1f2; color:#e11d48; border:1px solid #fecdd3; font-weight:700; padding:0.75rem 0.5rem; border-radius:10px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; transition:all 0.15s;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    <span>${t.btnActionReject}</span>
+                  </button>
+                  <button id="demo-action-counter-btn" type="button" class="c-btn" style="background:#eaf5f3; color:#00665e; border:2px solid #00665e; font-weight:800; padding:0.75rem 0.5rem; border-radius:10px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; box-shadow:0 2px 8px rgba(0,102,94,0.12); transition:all 0.15s;">
+                    ${IconScale(16)}
+                    <span>${t.btnActionCounter}</span>
+                  </button>
+                </div>
+              </div>
+            ` : ''}
+
+            ${isCountering || isRejected ? `
+              <!-- Countering State: Enter 43 and Submit -->
+              <div style="background:#f4faf8; border:2px solid #00665e; border-radius:12px; padding:1.15rem; animation:fadeIn 0.2s ease-out;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+                  <span style="font-weight:800; font-size:0.88rem; color:#1a2e2b;">
+                    ${t.counterPromptTitle}
+                  </span>
+                  <span id="demo-counter-preview-val" style="font-size:0.82rem; font-weight:800; color:#00665e; background:#ffffff; padding:3px 10px; border-radius:999px; border:1px solid #9ce9df;">
+                    Total: ₹${(product.volume * counterVal).toLocaleString('en-IN')}
+                  </span>
+                </div>
+
+                <div style="display:flex; gap:10px; align-items:center; margin-bottom:0.75rem;">
+                  <div style="position:relative; width:130px;">
+                    <input type="number" id="demo-counter-price-input" value="${counterVal}" min="30" max="60" step="1" class="c-input" style="width:100%; font-weight:800; font-size:1.15rem; color:#00665e; padding-right:38px; text-align:center;">
+                    <span style="position:absolute; right:10px; top:50%; transform:translateY(-50%); font-size:0.75rem; font-weight:700; color:#718280;">₹/kg</span>
+                  </div>
+                  <button id="demo-submit-counter-btn" type="button" class="c-btn c-btn-primary" style="flex:1; font-weight:800; padding:0.75rem 1rem; border-radius:10px; display:flex; align-items:center; justify-content:center; gap:8px;">
+                    <span>${t.btnSubmitCounter} (₹${counterVal}/kg)</span>
+                    ${IconArrowRight(16)}
+                  </button>
+                  <button id="demo-cancel-counter-btn" type="button" class="c-btn c-btn-outline" style="font-weight:600; padding:0.75rem 0.85rem; border-radius:10px;">
+                    ${t.btnCancelCounter}
+                  </button>
+                </div>
+
+                <div style="font-size:0.75rem; color:#5c6c69; display:flex; align-items:center; gap:6px;">
+                  <span style="color:#00665e;">${IconTrendingUp(14)}</span>
+                  <span>Mandi rate is ₹24/kg. At ₹${counterVal}/kg, you earn <strong>+${Math.round(((counterVal - 24) / 24) * 100)}% more</strong> (+₹${((counterVal - 24) * product.volume).toLocaleString('en-IN')} higher than APMC).</span>
+                </div>
+              </div>
+            ` : ''}
+
+            ${isAgreed ? `
+              <!-- Agreed State: Deal Confirmed + Proceed to Logistics Button -->
+              <div>
+                <div style="background:#eaf5f3; border:2px solid #00665e; border-radius:12px; padding:1.1rem; margin-bottom:1.25rem; text-align:center;">
+                  <div style="display:inline-flex; align-items:center; gap:6px; color:#00665e; font-weight:800; font-size:1.05rem; margin-bottom:0.25rem;">
+                    ${IconCheckCircle(20)}
+                    <span>Deal Agreed & Confirmed at ₹${agreedVal}/kg!</span>
+                  </div>
+                  <div style="font-size:0.95rem; color:#1a2e2b; font-weight:700;">
+                    Total Transaction Value: ₹${agreedTotal.toLocaleString('en-IN')} (500kg × ₹${agreedVal}/kg)
+                  </div>
+                  <div style="font-size:0.75rem; color:#00665e; font-weight:600; margin-top:0.35rem;">
+                    ${t.escrowLockedNote}
+                  </div>
+                </div>
+
+                <button id="demo-proceed-to-logistics-btn" type="button" class="c-btn c-btn-primary c-btn-block c-btn-lg" style="font-weight:800; font-size:1.05rem; padding:0.9rem; border-radius:10px; box-shadow:0 4px 14px rgba(0,102,94,0.3); display:flex; align-items:center; justify-content:center; gap:8px;">
+                  <span>${t.btnSellAndBookLogistics}</span>
+                  ${IconArrowRight(18)}
+                </button>
+
+                <div style="text-align:center; margin-top:0.75rem;">
+                  <button id="demo-renegotiate-btn" type="button" style="background:none; border:none; color:#00665e; font-size:0.78rem; font-weight:700; text-decoration:underline; cursor:pointer;">
+                    ${t.btnRenegotiate}
+                  </button>
+                </div>
+              </div>
+            ` : ''}
 
           </div>
 
@@ -1486,6 +1556,16 @@ export function attachDemoWorkflowListeners() {
       description
     });
 
+    // Reset negotiation state to 'initial' for fresh interaction in step 4
+    store.updateDemoNegotiation({
+      status: 'initial',
+      farmerAskingPrice: askingPrice,
+      buyerOfferPrice: 41,
+      farmerCounterPrice: 43,
+      agreedPrice: 43,
+      totalAgreedAmount: volume * 43
+    });
+
     store.showToast('Produce published live to Kisan Connect Marketplace!', 'success');
     store.setDemoStep(4);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1497,35 +1577,82 @@ export function attachDemoWorkflowListeners() {
   });
 
   // STEP 4: Marketplace Negotiation Listeners
+  // 1. Farmer Action: Accept ₹41/kg directly
+  document.getElementById('demo-action-accept-btn')?.addEventListener('click', () => {
+    const vol = store.getState().demoProduct?.volume || 500;
+    store.updateDemoNegotiation({
+      agreedPrice: 41,
+      totalAgreedAmount: vol * 41,
+      status: 'agreed'
+    });
+    store.showToast('Accepted initial offer of ₹41/kg from buyer!', 'success');
+  });
+
+  // 2. Farmer Action: Reject offer
+  document.getElementById('demo-action-reject-btn')?.addEventListener('click', () => {
+    store.updateDemoNegotiation({
+      status: 'rejected'
+    });
+    store.showToast('Offer rejected. You can enter a counter-offer below.', 'warning');
+  });
+
+  // 3. Farmer Action: Counter Offer
+  document.getElementById('demo-action-counter-btn')?.addEventListener('click', () => {
+    store.updateDemoNegotiation({
+      status: 'countering'
+    });
+  });
+
+  // 4. Cancel Counter: Return to initial 3 options
+  document.getElementById('demo-cancel-counter-btn')?.addEventListener('click', () => {
+    store.updateDemoNegotiation({
+      status: 'initial'
+    });
+  });
+
+  // 5. Live Counter Price Input Updates
   const counterInput = document.getElementById('demo-counter-price-input');
   counterInput?.addEventListener('input', (e) => {
     const val = parseInt(e.target.value, 10) || 43;
+    const vol = store.getState().demoProduct?.volume || 500;
     const previewEl = document.getElementById('demo-counter-preview-val');
     if (previewEl) {
-      previewEl.textContent = `₹${val} / kg (₹${(500 * val).toLocaleString('en-IN')})`;
+      previewEl.textContent = `Total: ₹${(vol * val).toLocaleString('en-IN')}`;
     }
   });
 
+  // Allow pressing Enter in counter input to submit
+  counterInput?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      document.getElementById('demo-submit-counter-btn')?.click();
+    }
+  });
+
+  // 6. Submit Counter-Offer (e.g. ₹43/kg) -> Buyer accepts
   document.getElementById('demo-submit-counter-btn')?.addEventListener('click', () => {
-    const val = parseInt(document.getElementById('demo-counter-price-input')?.value, 10) || 43;
+    const inputEl = document.getElementById('demo-counter-price-input');
+    const inputVal = inputEl ? parseInt(inputEl.value, 10) : 43;
+    const val = (!isNaN(inputVal) && inputVal > 0) ? inputVal : 43;
+    const vol = store.getState().demoProduct?.volume || 500;
     store.updateDemoNegotiation({
       farmerCounterPrice: val,
       agreedPrice: val,
-      totalAgreedAmount: 500 * val,
+      totalAgreedAmount: vol * val,
       status: 'agreed'
     });
-    store.showToast(`Buyer accepted counter-offer of ₹${val}/kg! Total: ₹${(500 * val).toLocaleString('en-IN')}`, 'success');
+    store.showToast(`Buyer accepted counter-offer of ₹${val}/kg! Total: ₹${(vol * val).toLocaleString('en-IN')}`, 'success');
   });
 
-  document.getElementById('demo-accept-initial-btn')?.addEventListener('click', () => {
+  // 7. Renegotiate (Reset to initial interactive buttons)
+  document.getElementById('demo-renegotiate-btn')?.addEventListener('click', () => {
     store.updateDemoNegotiation({
-      agreedPrice: 41,
-      totalAgreedAmount: 500 * 41,
-      status: 'agreed'
+      status: 'initial'
     });
-    store.showToast('Accepted initial offer of ₹41/kg from buyer', 'info');
+    store.showToast('Negotiation reset. Choose Accept, Reject, or Counter.', 'info');
   });
 
+  // 8. Proceed to Logistics
   document.getElementById('demo-proceed-to-logistics-btn')?.addEventListener('click', () => {
     store.setDemoStep(5);
     window.scrollTo({ top: 0, behavior: 'smooth' });

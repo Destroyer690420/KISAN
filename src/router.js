@@ -12,6 +12,7 @@ import { renderGiftCardPage, attachGiftCardListeners } from './pages/GiftCardPag
 import { renderSupportPage } from './pages/SupportPage.js';
 import { renderTermsPage } from './pages/TermsPage.js';
 import { renderDemoWorkflowPage, attachDemoWorkflowListeners } from './pages/DemoWorkflowPage.js';
+import { store } from './state/store.js';
 
 export function resolveRoute() {
   const hash = window.location.hash || '#/';

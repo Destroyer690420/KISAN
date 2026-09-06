@@ -77,7 +77,7 @@ class Store {
         farmerCounterPrice: 43,
         agreedPrice: 43,
         totalAgreedAmount: 21500, // 500 * 43
-        status: 'agreed' // 'initial' | 'countered' | 'agreed'
+        status: 'initial' // 'initial' | 'countering' | 'countered' | 'agreed' | 'rejected'
       }),
       demoLogistics: this.loadStorage('kc_demo_logistics', {
         crop: 'Farm-Fresh Tomatoes',
@@ -385,9 +385,19 @@ class Store {
     this.state.demoStep = 1;
     this.state.demoRole = 'farmer';
     this.state.demoTrackingStage = 1;
+    this.state.demoNegotiation = {
+      farmerAskingPrice: 45,
+      buyerName: 'Subhash Commercial Wholesale Kitchens (Mumbai Vashi)',
+      buyerInitialOffer: 41,
+      farmerCounterPrice: 43,
+      agreedPrice: 43,
+      totalAgreedAmount: 21500,
+      status: 'initial'
+    };
     this.saveStorage('kc_demo_step', 1);
     this.saveStorage('kc_demo_role', 'farmer');
     this.saveStorage('kc_demo_tracking_stage', 1);
+    this.saveStorage('kc_demo_negotiation', this.state.demoNegotiation);
     this.showToast('Demo Workflow reset to beginning', 'info');
     this.notify();
   }
