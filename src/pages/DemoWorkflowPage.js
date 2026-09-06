@@ -36,38 +36,6 @@ export function renderDemoWorkflowPage() {
     <div class="demo-workflow-wrapper" style="background:#f8faf9; min-height:90vh; padding:2rem 0 5rem;">
       <div class="container" style="max-width:1160px; margin:0 auto; padding:0 1.25rem;">
         
-        <!-- Top Pitch Bar for Hackathon Judges -->
-        <div class="demo-judge-pitch-card" style="background:linear-gradient(135deg, #00332e 0%, #004c46 50%, #00665e 100%); color:#ffffff; border-radius:18px; padding:1.75rem 2rem; margin-bottom:2rem; box-shadow:0 12px 32px rgba(0,51,46,0.22); position:relative; overflow:hidden;">
-          <div style="position:absolute; right:-20px; top:-20px; width:220px; height:220px; background:radial-gradient(circle, rgba(156,233,223,0.18) 0%, rgba(255,255,255,0) 70%); border-radius:50%; pointer-events:none;"></div>
-          
-          <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1.25rem; position:relative; z-index:1;">
-            <div>
-              <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25); padding:4px 12px; border-radius:999px; font-size:0.75rem; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; margin-bottom:0.75rem;">
-                <span style="display:flex; align-items:center; color:#9ce9df;">${IconSparkles(13)}</span>
-                <span>Hackathon Jury Presentation Mode</span>
-              </div>
-              <h1 style="font-size:1.85rem; font-weight:800; line-height:1.25; margin-bottom:0.4rem; color:#ffffff;">
-                KISAN: Full Impact & Disintermediation Workflow
-              </h1>
-              <p style="font-size:0.95rem; color:#d1e8e5; max-width:760px; margin:0; line-height:1.5;">
-                Experience how our direct farm-to-buyer platform eliminates 6 layers of APMC middlemen: 
-                <strong>Farmer Listing &rarr; AI Mandi Forecasting &rarr; Buyer Offer Negotiation &rarr; AI Smart Logistics &rarr; +231% Net Profit Realization &rarr; Amazon-Style Real-time Tracking.</strong>
-              </p>
-            </div>
-
-            <div style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:center;">
-              <button id="demo-quick-preset-btn" class="c-btn" style="background:#ffffff; color:#004c46; font-weight:700; font-size:0.85rem; padding:0.6rem 1.1rem; border-radius:10px; border:none; box-shadow:0 4px 12px rgba(0,0,0,0.15); display:inline-flex; align-items:center; gap:6px; cursor:pointer;">
-                ${IconPlay(14)}
-                <span>1-Click Fast Pitch (500kg Tomatoes)</span>
-              </button>
-              <button id="demo-reset-workflow-btn" class="c-btn" style="background:rgba(255,255,255,0.15); color:#ffffff; font-weight:600; font-size:0.85rem; padding:0.6rem 1rem; border-radius:10px; border:1px solid rgba(255,255,255,0.3); display:inline-flex; align-items:center; gap:6px; cursor:pointer;" title="Restart flow from Step 1">
-                ${IconRotateCcw(14)}
-                <span>Reset Flow</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
         <!-- 7-Step Navigation Bar -->
         <div class="demo-stepper-container" style="background:#ffffff; border:1px solid #e2ecea; border-radius:16px; padding:1rem 1.25rem; margin-bottom:2rem; box-shadow:0 4px 16px rgba(0,0,0,0.03); overflow-x:auto;">
           <div class="demo-stepper-bar" style="display:flex; align-items:center; justify-content:space-between; min-width:820px; gap:0.5rem;">
@@ -250,7 +218,7 @@ function renderStep1RoleSelection(role) {
       </div>
 
       <div style="font-size:0.85rem; color:#718280;">
-        For this hackathon evaluation, choosing <strong>Farmer</strong> takes you through produce upload, price forecasting, and the complete deal-to-logistics cycle.
+        Choosing <strong>Farmer</strong> takes you through produce upload, price forecasting, and the complete deal-to-logistics cycle.
       </div>
     </div>
   `;
@@ -1083,7 +1051,7 @@ function renderStep6ProfitImpact(negotiation, logistics) {
       <div style="background:linear-gradient(135deg, #00332e, #00665e); color:#ffffff; border-radius:16px; padding:1.5rem 1.75rem; margin-bottom:2rem; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1.25rem;">
         <div>
           <div style="font-size:0.75rem; font-weight:700; color:#9ce9df; text-transform:uppercase; margin-bottom:0.25rem;">
-            Why Judges Should Care (The KISAN Economic Revolution):
+            Key Financial Advantage (The KISAN Economic Revolution):
           </div>
           <div style="font-size:1.1rem; font-weight:800;">
             1. Farmer earned <span style="color:#9ce9df;">+₹${farmerGain.toLocaleString('en-IN')} more</span> on just 1 mini-truck dispatch.<br>
@@ -1324,39 +1292,6 @@ export function attachDemoWorkflowListeners() {
     });
   });
 
-  // Top Pitch Bar: 1-Click Fast Pitch (Loads Preset & Jumps to Step 3 / 4)
-  document.getElementById('demo-quick-preset-btn')?.addEventListener('click', () => {
-    store.updateDemoFarmer({
-      name: 'Rajesh Patil',
-      phone: '+91 98230 45120',
-      location: 'Pimpalgaon Baswant, Nashik, Maharashtra',
-      fpoName: 'Nashik Kisan Samruddhi Farmer Producer Co.',
-      crops: 'Hybrid Tomatoes, Lasalgaon Onions'
-    });
-    store.updateDemoProduct({
-      volume: 500,
-      askingPrice: 45,
-      title: 'Farm-Fresh Desi Hybrid Tomatoes (Grade-A Firm & Juicy)'
-    });
-    store.updateDemoNegotiation({
-      farmerAskingPrice: 45,
-      buyerInitialOffer: 41,
-      farmerCounterPrice: 43,
-      agreedPrice: 43,
-      totalAgreedAmount: 21500,
-      status: 'agreed'
-    });
-    store.setDemoTrackingStage(4);
-    store.setDemoStep(3);
-    store.showToast('1-Click Demo Fill: 500kg Tomatoes & AI Mandi Forecast Ready!', 'success');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  // Reset Workflow Button
-  document.getElementById('demo-reset-workflow-btn')?.addEventListener('click', () => {
-    store.resetDemoWorkflow();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
 
   // STEP 1: Role Selection Listeners
   const selectFarmer = () => {
