@@ -84,10 +84,10 @@ export function renderHeader() {
             ${IconSearch(17)}
           </button>
 
-          <!-- Judge Demo Button for Hackathon Evaluation -->
-          <a href="#/demo" class="c-btn c-btn-primary c-btn-sm judge-demo-nav-btn" title="Interactive 7-Step Hackathon Judge Demo Workflow" style="padding:0.38rem 0.85rem; font-size:0.8rem; font-weight:700; border-radius:999px; gap:6px; display:inline-flex; align-items:center; background:#00665e; color:#ffffff; text-decoration:none; box-shadow:0 2px 8px rgba(0,102,94,0.25);">
+          <!-- Demo Button -->
+          <a href="#/demo" class="c-btn c-btn-primary c-btn-sm judge-demo-nav-btn" title="Interactive 7-Step Demo Workflow" style="padding:0.38rem 0.85rem; font-size:0.8rem; font-weight:700; border-radius:999px; gap:6px; display:inline-flex; align-items:center; background:#00665e; color:#ffffff; text-decoration:none; box-shadow:0 2px 8px rgba(0,102,94,0.25);">
             <span style="display:flex; align-items:center;">${IconPlay(12)}</span>
-            <span>Judge Demo</span>
+            <span>Demo</span>
             <span class="nav-chip" style="background:#00332e; color:#9ce9df; font-size:0.62rem; padding:1px 5px; letter-spacing:0.5px;">LIVE</span>
           </a>
 
@@ -138,7 +138,7 @@ export function renderHeader() {
             <div style="display:flex; align-items:center; gap:10px;">
               <span style="background:rgba(255,255,255,0.2); width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center;">${IconPlay(16)}</span>
               <div>
-                <div style="font-weight:700; font-size:0.95rem; color:#ffffff;">Judge Demo Workflow</div>
+                <div style="font-weight:700; font-size:0.95rem; color:#ffffff;">Demo Workflow</div>
                 <div style="font-size:0.75rem; color:#9ce9df;">Farmer to Logistics to Payout</div>
               </div>
             </div>

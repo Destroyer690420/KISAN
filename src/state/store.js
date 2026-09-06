@@ -368,7 +368,7 @@ class Store {
     this.saveStorage('kc_demo_step', 1);
     this.saveStorage('kc_demo_role', 'farmer');
     this.saveStorage('kc_demo_tracking_stage', 1);
-    this.showToast('Judge Demo Workflow reset to beginning', 'info');
+    this.showToast('Demo Workflow reset to beginning', 'info');
     this.notify();
   }
 }

@@ -23,7 +23,7 @@ export function renderAuthModal() {
         <!-- Judge Workflow Quick Access Callout -->
         <div style="background:#eaf4f2; border:1px solid #c2e2dd; border-radius:12px; padding:0.85rem 1rem; margin-bottom:1.25rem; display:flex; align-items:center; justify-content:space-between; gap:12px;">
           <div>
-            <div style="font-size:0.75rem; font-weight:700; color:#00665e; text-transform:uppercase; letter-spacing:0.5px;">Hackathon Evaluation Demo</div>
+            <div style="font-size:0.75rem; font-weight:700; color:#00665e; text-transform:uppercase; letter-spacing:0.5px;">Platform Demo Workflow</div>
             <div style="font-size:0.8rem; color:#2c3e3b; font-weight:600;">Full Farmer &rarr; Logistics &rarr; Payout Flow</div>
           </div>
           <a href="#/demo" id="auth-launch-demo-btn" class="c-btn c-btn-primary c-btn-sm" style="font-size:0.75rem; padding:0.4rem 0.85rem; border-radius:999px; text-decoration:none; white-space:nowrap;">
