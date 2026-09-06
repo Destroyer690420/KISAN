@@ -1,0 +1,1105 @@
+/* ========================================================
+   HOME PAGE STYLES
+   ======================================================== */
+.hero-section {
+  padding: 3.5rem 0 2rem 0;
+  background: linear-gradient(180deg, #f3faf9 0%, #ffffff 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content {
+  text-align: center;
+  max-width: 860px;
+  margin: 0 auto 3rem auto;
+}
+
+.hero-tagline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #e4fbf7;
+  color: #00665e;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+
+.hero-title {
+  margin-bottom: 1.25rem;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: #535858;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Seasonal Highlights Carousel */
+.seasonal-banner-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 900px) {
+  .seasonal-banner-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .hero-section {
+    padding: 2.25rem 0 1.5rem 0;
+  }
+  .hero-content {
+    margin-bottom: 2rem;
+  }
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero-actions {
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+  .hero-actions .c-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .seasonal-card {
+    height: 300px;
+    padding: 1.25rem;
+  }
+  .seasonal-card-title {
+    font-size: 1.15rem;
+  }
+}
+
+.seasonal-card {
+  position: relative;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  height: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.75rem;
+  color: #ffffff;
+  text-decoration: none;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s ease;
+}
+
+.seasonal-card:hover {
+  transform: translateY(-4px);
+}
+
+.seasonal-card-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.seasonal-card:hover .seasonal-card-bg {
+  transform: scale(1.06);
+}
+
+.seasonal-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,30,27,0.85) 100%);
+}
+
+.seasonal-card-content {
+  position: relative;
+  z-index: 2;
+}
+
+.seasonal-card-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #9ce9df;
+  margin-bottom: 0.4rem;
+}
+
+.seasonal-card-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+}
+
+/* Ways to Buy Section */
+.ways-to-buy-section {
+  padding: 5rem 0;
+}
+
+.section-header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 3rem auto;
+}
+
+.ways-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .ways-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .ways-grid { grid-template-columns: 1fr; }
+}
+
+.way-card {
+  background-color: #ffffff;
+  border: 1px solid #eef2f2;
+  border-radius: 1.25rem;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  position: relative;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.way-card:hover {
+  transform: translateY(-6px);
+  border-color: #7fcbc2;
+  box-shadow: 0 16px 32px rgba(0, 50, 45, 0.08);
+}
+
+.way-icon-box {
+  width: 54px;
+  height: 54px;
+  border-radius: 1rem;
+  background-color: #e4fbf7;
+  color: #00665e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.way-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a1c1c;
+  margin-bottom: 0.5rem;
+}
+
+.way-desc {
+  font-size: 0.9rem;
+  color: #535858;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+
+.way-cta {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #00665e;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: auto;
+}
+
+/* Impact Counters */
+.impact-section {
+  background-color: #00332e;
+  color: #ffffff;
+  padding: 4.5rem 0;
+}
+
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .impact-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.impact-num {
+  font-size: 2.75rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: #9ce9df;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.impact-label {
+  font-size: 0.95rem;
+  color: #d6e0df;
+  font-weight: 500;
+}
+
+/* Mandi vs KISAN Comparison */
+.comparison-section {
+  padding: 5.5rem 0;
+  background-color: #fafcfc;
+}
+
+.comparison-table-wrap {
+  background-color: #ffffff;
+  border: 1px solid #eef2f2;
+  border-radius: 1.5rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: 0 12px 32px rgba(0, 40, 35, 0.05);
+  margin-top: 3rem;
+}
+
+.comparison-table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.comparison-table th, .comparison-table td {
+  padding: 1.25rem 1.75rem;
+  border-bottom: 1px solid #f0f4f4;
+}
+
+.comparison-table th {
+  background-color: #f7fafa;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1a1c1c;
+}
+
+.comparison-table th.highlight-col {
+  background-color: #e4fbf7;
+  color: #004c46;
+}
+
+.comparison-table td.highlight-col {
+  background-color: #f6fdfc;
+  font-weight: 600;
+  color: #00665e;
+}
+
+@media (max-width: 768px) {
+  .comparison-section {
+    padding: 3.5rem 0;
+  }
+  .comparison-table-wrap {
+    border-radius: 1rem;
+    margin-top: 1.5rem;
+  }
+  .comparison-table th, .comparison-table td {
+    padding: 0.85rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* ========================================================
+   MARKETPLACE CATALOG PAGE STYLES
+   ======================================================== */
+.catalog-header {
+  padding: 2.5rem 0 1.5rem 0;
+  border-bottom: 1px solid #eef2f2;
+}
+
+.category-pills-scroll {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding: 1rem 0;
+  scrollbar-width: none;
+}
+
+.category-pills-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.category-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.1rem;
+  background-color: #ffffff;
+  border-radius: 999px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #374151;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.category-pill .cat-pill-icon {
+  display: flex;
+  align-items: center;
+  color: #6b7280;
+  transition: color 0.2s;
+}
+
+.category-pill:hover {
+  background-color: #f9fafb;
+  border-color: #00665e;
+  color: #00665e;
+}
+
+.category-pill:hover .cat-pill-icon {
+  color: #00665e;
+}
+
+.category-pill.active {
+  background-color: #004c46;
+  border-color: #004c46;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 76, 70, 0.25);
+}
+
+.category-pill.active .cat-pill-icon {
+  color: #9ce9df;
+}
+
+.state-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0.15rem 0.45rem;
+  border-radius: 5px;
+  background: #f0fdf9;
+  color: #00665e;
+  border: 1px solid #ccece6;
+  margin-right: 0.45rem;
+}
+
+.catalog-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 2.5rem;
+  padding: 2.5rem 0 5rem 0;
+}
+
+.mobile-filter-bar {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .catalog-layout {
+    grid-template-columns: 1fr;
+    padding: 1.5rem 0 3.5rem 0;
+    gap: 1.5rem;
+  }
+  .catalog-sidebar {
+    display: none;
+  }
+  .catalog-sidebar.mobile-open {
+    display: block;
+    background: #ffffff;
+    border: 1px solid #d6e0df;
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  }
+  .mobile-filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .category-pills-scroll {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    padding-bottom: 0.5rem;
+  }
+}
+
+.filter-group {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #f0f4f4;
+}
+
+.filter-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1a1c1c;
+  margin-bottom: 0.9rem;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: #414545;
+  margin-bottom: 0.6rem;
+  cursor: pointer;
+}
+
+.filter-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: #00665e;
+  border-radius: 4px;
+}
+
+/* ========================================================
+   PRODUCT / ADOPTION DETAIL PAGE STYLES
+   ======================================================== */
+.product-detail-hero {
+  padding: 2.5rem 0 4rem 0;
+}
+
+.product-gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+}
+
+@media (max-width: 900px) {
+  .product-gallery-grid { grid-template-columns: 1fr; }
+}
+
+.main-image-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  background-color: #f7f9f9;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.main-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumbnail-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.thumb-btn {
+  width: 72px;
+  height: 72px;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.thumb-btn.active {
+  border-color: #00665e;
+}
+
+.thumb-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* PDP Grid & Gallery Styles */
+.pdp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+  align-items: start;
+}
+
+.pdp-gallery-main {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  background-color: #f1f5f9;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.pdp-main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pdp-thumbnails-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.25rem;
+}
+
+.pdp-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 0.75rem;
+  object-fit: cover;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.pdp-thumb.active {
+  border-color: #00665e;
+}
+
+@media (max-width: 900px) {
+  .pdp-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .pdp-gallery-main {
+    aspect-ratio: 16 / 11;
+  }
+}
+
+.order-box-card {
+  background-color: #ffffff;
+  border: 1.5px solid #d6e0df;
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  box-shadow: 0 6px 20px rgba(0, 30, 27, 0.05);
+}
+
+.order-mode-tabs {
+  display: flex;
+  background-color: #f3f6f6;
+  border-radius: 999px;
+  padding: 0.35rem;
+  margin-bottom: 1.5rem;
+}
+
+.order-mode-tab {
+  flex: 1;
+  padding: 0.65rem 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: 999px;
+  color: #535858;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.order-mode-tab.active {
+  background-color: #ffffff;
+  color: #00665e;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.adoption-form-box {
+  background-color: #f6fbf9;
+  border: 1px dashed #7fcbc2;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.c-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #d6e0df;
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+}
+
+.c-input:focus {
+  border-color: #00665e;
+  outline: none;
+}
+
+/* Harvest Timeline Calendar */
+.harvest-calendar-row {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0.35rem;
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.75rem;
+}
+
+.month-slot {
+  padding: 0.5rem 0.2rem;
+  border-radius: 0.4rem;
+  background-color: #f3f6f6;
+  color: #7d8483;
+}
+
+.month-slot.harvest {
+  background-color: #00665e;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.month-slot.flowering {
+  background-color: #e4fbf7;
+  color: #00665e;
+}
+
+/* Cost Breakdown Bar */
+.cost-breakdown-bar {
+  display: flex;
+  height: 24px;
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 1.25rem 0 1rem 0;
+}
+
+.cost-segment {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: #ffffff;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 0 4px;
+}
+
+.cost-farmer { background-color: #00665e; width: 60%; }
+.cost-logistics { background-color: #27749a; width: 22%; }
+.cost-packaging { background-color: #e14f00; width: 8%; }
+.cost-cf { background-color: #7e5c93; width: 10%; }
+
+@media (max-width: 640px) {
+  .cost-breakdown-bar {
+    height: auto;
+    flex-direction: column;
+    border-radius: 0.75rem;
+    gap: 4px;
+    background: transparent;
+  }
+  .cost-segment {
+    height: 28px;
+    width: 100% !important;
+    border-radius: 6px;
+    justify-content: flex-start;
+    padding: 0 0.75rem;
+  }
+}
+
+/* ========================================================
+   SUBSCRIPTION BOX PAGE STYLES
+   ======================================================== */
+.sub-hero {
+  background: linear-gradient(180deg, #eaf8f5 0%, #ffffff 100%);
+  padding: 4rem 0 3rem 0;
+  text-align: center;
+}
+
+.sub-frequency-selector {
+  display: inline-flex;
+  background-color: #f3f6f6;
+  padding: 0.35rem;
+  border-radius: 999px;
+  margin: 2rem 0;
+}
+
+.sub-freq-btn {
+  padding: 0.75rem 1.75rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 999px;
+  color: #414545;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.sub-freq-btn.active {
+  background-color: #00665e;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 102, 94, 0.25);
+}
+
+.box-tier-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+@media (max-width: 900px) {
+  .box-tier-grid { grid-template-columns: 1fr; }
+}
+
+.box-tier-card {
+  background-color: #ffffff;
+  border: 2px solid #eef2f2;
+  border-radius: 1.5rem;
+  padding: 2.25rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.box-tier-card.featured {
+  border-color: #00665e;
+  box-shadow: 0 16px 36px rgba(0, 50, 45, 0.1);
+}
+
+.box-tier-card.featured::before {
+  content: 'Most Popular';
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #00665e;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+}
+
+/* ========================================================
+   REGENERATIVE AGRICULTURE MANIFESTO
+   ======================================================== */
+.regen-manifesto-hero {
+  background-color: #002824;
+  color: #ffffff;
+  padding: 6rem 0;
+  text-align: center;
+}
+
+.comparison-slider-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 3.5rem 0;
+}
+
+@media (max-width: 768px) {
+  .comparison-slider-container { grid-template-columns: 1fr; }
+}
+
+.tree-model-card {
+  border-radius: 1.25rem;
+  padding: 2rem;
+}
+
+.tree-model-conventional {
+  background-color: #fdf6f5;
+  border: 1px solid #ffc9bf;
+}
+
+.tree-model-regenerative {
+  background-color: #e6fbf0;
+  border: 1px solid #a7e9c8;
+}
+
+/* ========================================================
+   MEMBERSHIP / HARVEST PASS
+   ======================================================== */
+.membership-hero {
+  background: linear-gradient(135deg, #00332e 0%, #00665e 100%);
+  color: #ffffff;
+  padding: 5.5rem 0 4rem 0;
+  text-align: center;
+}
+
+.pass-card-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 3rem;
+  margin-top: 3.5rem;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .pass-card-grid { grid-template-columns: 1fr; }
+}
+
+.pass-perk-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.pass-perk-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #e4fbf7;
+  color: #00665e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ========================================================
+   GIFT CARDS
+   ======================================================== */
+.gift-card-preview-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  padding: 4rem 0;
+}
+
+@media (max-width: 900px) {
+  .gift-card-preview-wrap { grid-template-columns: 1fr; }
+}
+
+.certificate-card {
+  background: linear-gradient(135deg, #004c46 0%, #00665e 100%);
+  color: #ffffff;
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  aspect-ratio: 16 / 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 16px 40px rgba(0, 30, 27, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.certificate-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ========================================================
+   RESPONSIVE SECTION & CARD UTILITIES
+   ======================================================== */
+
+/* Home Benefits Bar Two-Sided Columns */
+.benefits-bar-col-left {
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+  padding-right: 2rem;
+}
+
+.benefits-bar-col-right {
+  padding-left: 1rem;
+}
+
+@media (max-width: 768px) {
+  .benefits-bar-col-left {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-right: 0;
+    padding-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .benefits-bar-col-right {
+    padding-left: 0;
+  }
+}
+
+/* Bulk Page Calculator & Metrics */
+.bulk-calculator-card {
+  background: #ffffff;
+  border: 2px solid #7fcbc2;
+  border-radius: 1.75rem;
+  padding: 3rem;
+  box-shadow: 0 12px 36px rgba(0, 76, 70, 0.08);
+}
+
+.bulk-metrics-card {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  background: #f7faf9;
+  border-radius: 1rem;
+  padding: 1.75rem;
+  border: 1px solid #d6e0df;
+}
+
+.bulk-metric-col-mid {
+  border-left: 1px solid #d6e0df;
+  border-right: 1px solid #d6e0df;
+}
+
+@media (max-width: 768px) {
+  .bulk-calculator-card {
+    padding: 1.5rem 1rem;
+    border-radius: 1.25rem;
+  }
+  .bulk-metrics-card {
+    grid-template-columns: 1fr;
+    padding: 1.25rem 1rem;
+    gap: 1.25rem;
+  }
+  .bulk-metric-col-mid {
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid #d6e0df;
+    border-bottom: 1px solid #d6e0df;
+    padding: 1rem 0;
+  }
+}
+
+/* FPO Network Cards */
+.fpo-card-col-info {
+  padding: 2rem;
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+  .fpo-card-col-info {
+    padding: 1.25rem 1rem;
+    grid-column: auto / span 1 !important;
+  }
+}
+
+/* Farmer Registration Card */
+.farmer-form-container {
+  background: #ffffff;
+  border: 1.5px solid #7fcbc2;
+  border-radius: 1.75rem;
+  padding: 3rem;
+  box-shadow: 0 12px 36px rgba(0, 76, 70, 0.06);
+}
+
+.kisan-practices-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 768px) {
+  .farmer-form-container {
+    padding: 1.5rem 1rem;
+    border-radius: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .kisan-practices-grid {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+}
+
+/* Gift Card amounts */
+.gift-card-amounts-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 480px) {
+  .gift-card-amounts-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* -------------------------------------------------------------
+   HACKATHON JUDGE DEMO WORKFLOW STYLES
+   ------------------------------------------------------------- */
+.demo-workflow-wrapper {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.demo-step-jump-btn:hover {
+  background: #f1f5f4 !important;
+}
+
+.demo-role-card {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.demo-role-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 102, 94, 0.12) !important;
+  border-color: #00665e !important;
+}
+
+.judge-demo-nav-btn {
+  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.judge-demo-nav-btn:hover {
+  transform: translateY(-1px);
+  background-color: #004c46 !important;
+  box-shadow: 0 4px 14px rgba(0, 102, 94, 0.35) !important;
+}
+
+/* Amazon Timeline active pulse */
+@keyframes timelineNodeGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 102, 94, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(0, 102, 94, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 102, 94, 0);
+  }
+}
+
+.timeline-row .timeline-node-active {
+  animation: timelineNodeGlow 1.8s infinite;
+}
+
+@media (max-width: 860px) {
+  .demo-judge-pitch-card {
+    padding: 1.25rem 1.25rem !important;
+  }
+  
+  .demo-judge-pitch-card h1 {
+    font-size: 1.4rem !important;
+  }
+
+  .demo-step-content-box {
+    padding: 1.25rem 1rem !important;
+  }
+
+  .demo-grid-2col {
+    grid-template-columns: 1fr !important;
+  }
+}

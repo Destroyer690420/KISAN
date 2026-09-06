@@ -1,0 +1,62 @@
+export const farmers = [
+  {
+    id: 'shinde-devgad-hapus',
+    name: 'Savitribai & Eknath Shinde',
+    farm: 'Devgad Hapus Baug',
+    location: 'Devgad, Sindhudurg, Maharashtra',
+    avatar: 'https://common.crowdfarming.com/uploaded-images/1774450644972-a1858eed-a74e-461a-a8ea-552cee7ebe4f.jpg?Imwidth=320',
+    coverImage: 'https://common.crowdfarming.com/uploaded-images/1785489058860-177462ef-2d92-44b4-b6f5-e19ec0082de6.jpg?Imwidth=1200',
+    quote: "In Devgad, the sea breeze and rocky laterite soil give Alphonso mangoes their legendary golden skin and sweet nectar. We harvest only when the fruit drops naturally into our hand.",
+    crops: ['Devgad Alphonso Mangoes', 'Kokum', 'Cashews'],
+    cultivation: 'NPOP India Organic & Jaivik Bharat',
+    hectares: 18,
+    experienceYears: 24,
+    adoptedTrees: 1840,
+    impact: '100% Zero-Carbide natural ripening using traditional rice straw beds; saved 3.8M liters of water via precision drip.'
+  },
+  {
+    id: 'ramesh-patel-gir',
+    name: 'Ramesh Patel',
+    farm: 'Gir Amrutam Organic Orchard',
+    location: 'Talala Gir, Junagadh, Gujarat',
+    avatar: 'https://common.crowdfarming.com/uploaded-images/1769081626210-0ea0dac1-5eac-4560-91d4-44b39b4b15da.jpg?Imwidth=320',
+    coverImage: 'https://common.crowdfarming.com/uploaded-images/1768511919635-7be21903-7eb1-4887-84a8-5fee869413f7.jpg?Imwidth=1200',
+    quote: "Our orchard borders the Asiatic Lion reserve. We farm in complete harmony with wildlife — using Jeevamrut from indigenous Gir cows instead of synthetic urea.",
+    crops: ['Gir Kesar Mangoes', 'Custard Apples', 'Desi Jamun'],
+    cultivation: 'Zero Budget Natural Farming (ZBNF)',
+    hectares: 22,
+    experienceYears: 19,
+    adoptedTrees: 2150,
+    impact: 'Increased soil organic carbon from 0.4% to 1.6% and eliminated all synthetic pesticide drift.'
+  },
+  {
+    id: 'hardik-bhai-gir-ghee',
+    name: 'Hardik Bhai & Gau Seva Parivar',
+    farm: 'Gir Vedic Gaushala',
+    location: 'Bhavnagar, Saurashtra, Gujarat',
+    avatar: 'https://common.crowdfarming.com/uploaded-images/1745426496243-d16dadcd-597b-44d2-978a-7766036e0a3c.jpg?Imwidth=320',
+    coverImage: 'https://common.crowdfarming.com/uploaded-images/1773235038786-8b07d805-c2d8-4c1c-9675-2a3c420f38a0.png?Imwidth=1200',
+    quote: "A cow is not a factory machine. Our pure Gir cows graze openly on medicinal forest pastures, and calves drink first. The bilona ghee we churn is pure divine medicine.",
+    crops: ['Desi Gir Cow A2 Bilona Ghee', 'Bio-Compost Fertilizer'],
+    cultivation: 'Ancient Vedic Ahimsak Gau-Palan',
+    hectares: 35,
+    experienceYears: 15,
+    adoptedTrees: 1420,
+    impact: 'Provides organic bio-fertilizer to over 50 neighboring organic farmers, reviving 200+ acres of degraded land.'
+  },
+  {
+    id: 'tenzin-sunil-kinnaur',
+    name: 'Tenzin & Sunil Negi',
+    farm: 'Kinnaur Spiti Border Orchards',
+    location: 'Kalpa, Kinnaur, Himachal Pradesh (9,200 ft)',
+    avatar: 'https://common.crowdfarming.com/uploaded-images/1693310829224-fdfa8ac1-505c-4dda-8c69-11629ac2f349.jpg?Imwidth=320',
+    coverImage: 'https://common.crowdfarming.com/uploaded-images/1714990611226-844a71c0-a83a-4d2a-b9a2-a32050d95227.jpg?Imwidth=1200',
+    quote: "At 9,200 feet, clean snow-melt and intense Himalayan sun give our apples an unmistakable crunch and natural sweetness. We never use cosmetic waxes.",
+    crops: ['Kinnaur Royal Delicious Apples', 'Golden Delicious', 'Wild Apricots'],
+    cultivation: 'High Altitude Snow-Fed Organic',
+    hectares: 12,
+    experienceYears: 20,
+    adoptedTrees: 1980,
+    impact: 'Pioneered gravity-fed glacial melt micro-irrigation, preserving delicate high-altitude Himalayan water tables.'
+  }
+];
