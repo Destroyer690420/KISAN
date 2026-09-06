@@ -1,4 +1,5 @@
 import { products as initialProducts } from '../data/products.js';
+import { LANGUAGES, getTranslation } from '../i18n/translations.js';
 
 export const CURRENCIES = {
   INR: { symbol: '₹', rate: 1.0, name: 'Indian Rupee (₹)' }
@@ -27,6 +28,7 @@ class Store {
     this.state = {
       cart: this.loadStorage('kc_cart', this.loadStorage('cf_in_cart', [])),
       currency: 'INR',
+      language: this.loadStorage('kc_language', 'en'),
       buyerMode: this.loadStorage('kc_buyer_mode', 'retail'), // 'retail' or 'bulk'
       selectedRegion: this.loadStorage('kc_region', this.loadStorage('cf_in_region', INDIAN_REGIONS[0])),
       pincode: this.loadStorage('kc_pincode', this.loadStorage('cf_in_pincode', '400001')),
@@ -152,6 +154,24 @@ class Store {
       'info'
     );
     this.notify();
+  }
+
+  setLanguage(lang) {
+    if (!LANGUAGES[lang]) return;
+    this.state.language = lang;
+    this.saveStorage('kc_language', lang);
+    const langNames = {
+      en: 'Language switched to English',
+      hi: 'भाषा बदलकर हिन्दी कर दी गई है',
+      mr: 'भाषा मराठी मध्ये बदलण्यात आली आहे',
+      pa: 'ਭਾਸ਼ਾ ਬਦਲ ਕੇ ਪੰਜਾਬੀ ਕਰ ਦਿੱਤੀ ਗਈ ਹੈ'
+    };
+    this.showToast(langNames[lang] || `Language set to ${lang}`, 'info');
+    this.notify();
+  }
+
+  getTranslation() {
+    return getTranslation(this.state.language);
   }
 
   addToCart(item) {

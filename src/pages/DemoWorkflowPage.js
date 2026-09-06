@@ -1,4 +1,5 @@
 import { store } from '../state/store.js';
+import { LANGUAGES, getTranslation } from '../i18n/translations.js';
 import {
   IconTractor,
   IconBuilding,
@@ -19,11 +20,14 @@ import {
   IconArrowRight,
   IconSparkles,
   IconLeaf,
-  IconShoppingBag
+  IconShoppingBag,
+  IconVolume2
 } from '../components/icons.js';
 
 export function renderDemoWorkflowPage() {
   const state = store.getState();
+  const langCode = state.language || 'en';
+  const t = getTranslation(langCode);
   const step = state.demoStep || 1;
   const role = state.demoRole || 'farmer';
   const farmer = state.demoFarmer;
@@ -36,30 +40,89 @@ export function renderDemoWorkflowPage() {
     <div class="demo-workflow-wrapper" style="background:#f8faf9; min-height:90vh; padding:2rem 0 5rem;">
       <div class="container" style="max-width:1160px; margin:0 auto; padding:0 1.25rem;">
         
-        <!-- 7-Step Navigation Bar -->
-        <div class="demo-stepper-container" style="background:#ffffff; border:1px solid #e2ecea; border-radius:16px; padding:1rem 1.25rem; margin-bottom:2rem; box-shadow:0 4px 16px rgba(0,0,0,0.03); overflow-x:auto;">
-          <div class="demo-stepper-bar" style="display:flex; align-items:center; justify-content:space-between; min-width:820px; gap:0.5rem;">
-            
-            ${renderStepItem(1, 'Role', 'Farmer / Buyer', step)}
-            ${renderStepDivider(1, step)}
-            ${renderStepItem(2, 'Profile', 'Name & Mobile', step)}
-            ${renderStepDivider(2, step)}
-            ${renderStepItem(3, 'Produce', 'AI Price Forecast', step)}
-            ${renderStepDivider(3, step)}
-            ${renderStepItem(4, 'Market', 'Buyer Negotiation', step)}
-            ${renderStepDivider(4, step)}
-            ${renderStepItem(5, 'Logistics', 'AI Smart Matching', step)}
-            ${renderStepDivider(5, step)}
-            ${renderStepItem(6, 'Profits', '+231% Earnings', step)}
-            ${renderStepDivider(6, step)}
-            ${renderStepItem(7, 'Tracking', 'Amazon Live Status', step)}
+        <!-- Top Pitch Bar for Hackathon Judges -->
+        <div class="demo-judge-pitch-card" style="background:linear-gradient(135deg, #00332e 0%, #004c46 50%, #00665e 100%); color:#ffffff; border-radius:18px; padding:1.75rem 2rem; margin-bottom:2rem; box-shadow:0 12px 32px rgba(0,51,46,0.22); position:relative; overflow:hidden;">
+          <div style="position:absolute; right:-20px; top:-20px; width:220px; height:220px; background:radial-gradient(circle, rgba(156,233,223,0.18) 0%, rgba(255,255,255,0) 70%); border-radius:50%; pointer-events:none;"></div>
+          
+          <div style="position:relative; z-index:1;">
+            <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1.25rem; margin-bottom:1rem;">
+              <div>
+                <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25); padding:4px 12px; border-radius:999px; font-size:0.75rem; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; margin-bottom:0.75rem;">
+                  <span style="display:flex; align-items:center; color:#9ce9df;">${IconSparkles(13)}</span>
+                  <span>${t.demoPitchBadge}</span>
+                </div>
+                <h1 style="font-size:1.85rem; font-weight:800; line-height:1.25; margin-bottom:0.4rem; color:#ffffff;">
+                  ${t.demoPitchTitle}
+                </h1>
+                <p style="font-size:0.95rem; color:#d1e8e5; max-width:760px; margin:0; line-height:1.5;">
+                  ${t.demoPitchDesc}
+                </p>
+              </div>
+
+              <div style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:center;">
+                <button id="demo-quick-preset-btn" class="c-btn" style="background:#ffffff; color:#004c46; font-weight:700; font-size:0.85rem; padding:0.6rem 1.1rem; border-radius:10px; border:none; box-shadow:0 4px 12px rgba(0,0,0,0.15); display:inline-flex; align-items:center; gap:6px; cursor:pointer;">
+                  ${IconPlay(14)}
+                  <span>${t.demoFastPitchBtn}</span>
+                </button>
+                <button id="demo-reset-workflow-btn" class="c-btn" style="background:rgba(255,255,255,0.15); color:#ffffff; font-weight:600; font-size:0.85rem; padding:0.6rem 1rem; border-radius:10px; border:1px solid rgba(255,255,255,0.3); display:inline-flex; align-items:center; gap:6px; cursor:pointer;" title="Restart flow from Step 1">
+                  ${IconRotateCcw(14)}
+                  <span>${t.demoResetBtn}</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Prominent Multi-Language Selector Bar (Directly solves uneducated/regional farmer accessibility) -->
+            <div class="demo-lang-bar" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.22); border-radius:12px; padding:0.7rem 1.15rem; margin-top:1.25rem;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="display:flex; align-items:center; color:#9ce9df;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </span>
+                <span style="font-size:0.85rem; font-weight:800; color:#ffffff;">
+                  ${t.demoLangSelectorTitle}
+                </span>
+              </div>
+
+              <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                ${Object.values(LANGUAGES).map(l => `
+                  <button class="demo-lang-pill-btn ${l.code === langCode ? 'active' : ''}" data-lang="${l.code}" style="background:${l.code === langCode ? '#ffffff' : 'rgba(255,255,255,0.12)'}; color:${l.code === langCode ? '#004c46' : '#ffffff'}; font-weight:${l.code === langCode ? '900' : '600'}; border:none; padding:5px 14px; border-radius:999px; font-size:0.82rem; cursor:pointer; transition:all 0.15s; box-shadow:${l.code === langCode ? '0 2px 8px rgba(0,0,0,0.2)' : 'none'};">
+                    ${l.nativeName}
+                  </button>
+                `).join('')}
+              </div>
+
+              <div style="display:inline-flex; align-items:center; gap:6px; background:rgba(156,233,223,0.15); border:1px solid rgba(156,233,223,0.3); border-radius:999px; padding:3px 10px; font-size:0.72rem; color:#9ce9df; font-weight:700;">
+                <span>${IconShield(12)}</span>
+                <span>${t.demoAccessibilityBadge}</span>
+              </div>
+            </div>
 
           </div>
         </div>
 
-        <!-- Dynamic Step Content Area -->
+        <!-- 7-Step Navigation Bar -->
+        <div class="demo-stepper-container" style="background:#ffffff; border:1px solid #e2ecea; border-radius:16px; padding:1rem 1.25rem; margin-bottom:2rem; box-shadow:0 4px 16px rgba(0,0,0,0.03); overflow-x:auto;">
+          <div class="demo-stepper-bar" style="display:flex; align-items:center; justify-content:space-between; min-width:820px; gap:0.5rem;">
+            
+            ${renderStepItem(1, t.step1Title, t.step1Desc, step)}
+            ${renderStepDivider(1, step)}
+            ${renderStepItem(2, t.step2Title, t.step2Desc, step)}
+            ${renderStepDivider(2, step)}
+            ${renderStepItem(3, t.step3Title, t.step3Desc, step)}
+            ${renderStepDivider(3, step)}
+            ${renderStepItem(4, t.step4Title, t.step4Desc, step)}
+            ${renderStepDivider(4, step)}
+            ${renderStepItem(5, t.step5Title, t.step5Desc, step)}
+            ${renderStepDivider(5, step)}
+            ${renderStepItem(6, t.step6Title, t.step6Desc, step)}
+            ${renderStepDivider(6, step)}
+            ${renderStepItem(7, t.step7Title, t.step7Desc, step)}
+
+          </div>
+        </div>
+
+        <!-- Dynamic Step Content Box -->
         <div class="demo-step-content-box" style="background:#ffffff; border:1px solid #e2ecea; border-radius:20px; padding:2rem 2.25rem; box-shadow:0 8px 24px rgba(0,0,0,0.04);">
-          ${renderCurrentStepContent(step, role, farmer, product, negotiation, logistics, trackingStage)}
+          ${renderCurrentStepContent(step, role, farmer, product, negotiation, logistics, trackingStage, t, langCode)}
         </div>
 
       </div>
@@ -86,7 +149,7 @@ function renderStepItem(stepNum, shortTitle, desc, currentStep) {
   }
 
   return `
-    <button class="demo-step-jump-btn" data-step="${stepNum}" style="background:none; border:none; cursor:pointer; padding:4px 8px; text-align:left; display:flex; align-items:center; gap:10px; border-radius:10px; transition:all 0.2s;">
+    <button class="demo-step-jump-btn" data-step="${stepNum}" id="stepper-step-${stepNum}" style="background:none; border:none; cursor:pointer; padding:4px 8px; text-align:left; display:flex; align-items:center; gap:10px; border-radius:10px; transition:all 0.2s;">
       <div style="width:34px; height:34px; border-radius:50%; background:${bg}; color:${color}; border:${border}; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0;">
         ${isCompleted ? IconCheck(16) : stepNum}
       </div>
@@ -109,42 +172,41 @@ function renderStepDivider(stepNum, currentStep) {
   `;
 }
 
-function renderCurrentStepContent(step, role, farmer, product, negotiation, logistics, trackingStage) {
+function renderCurrentStepContent(step, role, farmer, product, negotiation, logistics, trackingStage, t, langCode) {
   switch (step) {
     case 1:
-      return renderStep1RoleSelection(role);
+      return renderStep1RoleSelection(role, t);
     case 2:
-      return renderStep2FarmerProfile(farmer);
+      return renderStep2FarmerProfile(farmer, t);
     case 3:
-      return renderStep3ProduceAndForecast(product);
+      return renderStep3ProduceAndForecast(product, t, langCode);
     case 4:
-      return renderStep4MarketNegotiation(product, negotiation);
+      return renderStep4MarketNegotiation(product, negotiation, t);
     case 5:
-      return renderStep5SmartLogistics(product, logistics);
+      return renderStep5SmartLogistics(product, logistics, t);
     case 6:
-      return renderStep6ProfitImpact(negotiation, logistics);
+      return renderStep6ProfitImpact(negotiation, logistics, t);
     case 7:
-      return renderStep7LiveTracking(product, logistics, trackingStage);
+      return renderStep7LiveTracking(product, logistics, trackingStage, t, langCode);
     default:
-      return renderStep1RoleSelection(role);
+      return renderStep1RoleSelection(role, t);
   }
 }
 
 // -------------------------------------------------------------
 // STEP 1: ROLE SELECTION
 // -------------------------------------------------------------
-function renderStep1RoleSelection(role) {
+function renderStep1RoleSelection(role, t) {
   return `
     <div style="max-width:820px; margin:0 auto; text-align:center;">
       <div style="display:inline-flex; align-items:center; gap:6px; color:#00665e; background:#eaf5f3; padding:4px 12px; border-radius:999px; font-size:0.8rem; font-weight:700; margin-bottom:0.75rem;">
-        <span>Step 1 of 7</span> &bull; <span>Role Onboarding</span>
+        <span>${t.step1Tag}</span>
       </div>
       <h2 style="font-size:2rem; font-weight:800; color:#1a2e2b; margin-bottom:0.5rem;">
-        Are you a Farmer or a Buyer?
+        ${t.step1Heading}
       </h2>
       <p style="font-size:1rem; color:#5c6c69; margin-bottom:2.25rem;">
-        KISAN provides custom intelligence for both sides of the agricultural food chain. 
-        Select your persona to start the interactive demo.
+        ${t.step1Subheading}
       </p>
 
       <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem; text-align:left; margin-bottom:2rem;">
@@ -152,73 +214,73 @@ function renderStep1RoleSelection(role) {
         <!-- Farmer Card -->
         <div id="role-select-farmer" class="demo-role-card ${role === 'farmer' ? 'active-role' : ''}" style="border:2px solid ${role === 'farmer' ? '#00665e' : '#e2ecea'}; background:${role === 'farmer' ? '#f4faf8' : '#ffffff'}; border-radius:16px; padding:1.75rem; cursor:pointer; position:relative; transition:all 0.2s; box-shadow:${role === 'farmer' ? '0 8px 24px rgba(0,102,94,0.12)' : 'none'};">
           <div style="display:inline-block; background:#00665e; color:#ffffff; font-size:0.7rem; font-weight:800; padding:3px 10px; border-radius:999px; margin-bottom:1rem; text-transform:uppercase; letter-spacing:0.5px;">
-            Recommended for Judges Demo
+            ${t.farmerRoleBadge}
           </div>
           <div style="display:flex; align-items:center; gap:12px; margin-bottom:1rem;">
             <div style="width:48px; height:48px; border-radius:12px; background:#00665e; color:#ffffff; display:flex; align-items:center; justify-content:center;">
               ${IconTractor(24)}
             </div>
             <div>
-              <h3 style="font-size:1.25rem; font-weight:800; color:#1a2e2b; margin:0;">I am a Farmer / FPO</h3>
-              <div style="font-size:0.8rem; color:#00665e; font-weight:700;">Direct Producer Seller</div>
+              <h3 style="font-size:1.25rem; font-weight:800; color:#1a2e2b; margin:0;">${t.farmerRoleTitle}</h3>
+              <div style="font-size:0.8rem; color:#00665e; font-weight:700;">${t.farmerRoleSubtitle}</div>
             </div>
           </div>
           <p style="font-size:0.9rem; color:#5c6c69; line-height:1.5; margin-bottom:1.25rem;">
-            Upload your harvest at zero commission, receive AI Mandi price predictions for peak profits, negotiate directly with bulk buyers, and get guaranteed instant bank transfers.
+            ${t.farmerRoleDesc}
           </p>
           <ul style="list-style:none; padding:0; margin:0 0 1.5rem; font-size:0.85rem; color:#2c3e3b; display:flex; flex-direction:column; gap:8px;">
             <li style="display:flex; align-items:center; gap:8px;">
-              <span style="color:#00665e;">${IconCheckCircle(16)}</span> Zero middlemen commission agents
+              <span style="color:#00665e;">${IconCheckCircle(16)}</span> ${t.farmerBenefit1}
             </li>
             <li style="display:flex; align-items:center; gap:8px;">
-              <span style="color:#00665e;">${IconCheckCircle(16)}</span> AI Mandi rate forecasting for best selling time
+              <span style="color:#00665e;">${IconCheckCircle(16)}</span> ${t.farmerBenefit2}
             </li>
             <li style="display:flex; align-items:center; gap:8px;">
-              <span style="color:#00665e;">${IconCheckCircle(16)}</span> AI Smart Logistics with 48% cheaper freight
+              <span style="color:#00665e;">${IconCheckCircle(16)}</span> ${t.farmerBenefit3}
             </li>
           </ul>
           <button id="btn-continue-farmer" type="button" class="c-btn c-btn-primary c-btn-block" style="font-weight:700; padding:0.75rem; border-radius:10px;">
-            Continue as Farmer &rarr;
+            ${t.btnContinueFarmer}
           </button>
         </div>
 
         <!-- Buyer Card -->
         <div id="role-select-buyer" class="demo-role-card ${role === 'buyer' ? 'active-role' : ''}" style="border:2px solid ${role === 'buyer' ? '#00665e' : '#e2ecea'}; background:${role === 'buyer' ? '#f4faf8' : '#ffffff'}; border-radius:16px; padding:1.75rem; cursor:pointer; position:relative; transition:all 0.2s; box-shadow:${role === 'buyer' ? '0 8px 24px rgba(0,102,94,0.12)' : 'none'};">
           <div style="display:inline-block; background:#64748b; color:#ffffff; font-size:0.7rem; font-weight:800; padding:3px 10px; border-radius:999px; margin-bottom:1rem; text-transform:uppercase; letter-spacing:0.5px;">
-            Commercial & Retail Buyers
+            ${t.buyerRoleBadge}
           </div>
           <div style="display:flex; align-items:center; gap:12px; margin-bottom:1rem;">
             <div style="width:48px; height:48px; border-radius:12px; background:#eaf5f3; color:#00665e; display:flex; align-items:center; justify-content:center;">
               ${IconBuilding(24)}
             </div>
             <div>
-              <h3 style="font-size:1.25rem; font-weight:800; color:#1a2e2b; margin:0;">I am a Buyer</h3>
-              <div style="font-size:0.8rem; color:#64748b; font-weight:700;">Wholesale, HoReCa & Households</div>
+              <h3 style="font-size:1.25rem; font-weight:800; color:#1a2e2b; margin:0;">${t.buyerRoleTitle}</h3>
+              <div style="font-size:0.8rem; color:#64748b; font-weight:700;">${t.buyerRoleSubtitle}</div>
             </div>
           </div>
           <p style="font-size:0.9rem; color:#5c6c69; line-height:1.5; margin-bottom:1.25rem;">
-            Procure farm-fresh crops directly from verified FPOs. Place live price offers, verify optical quality grades, and track consolidated cold-chain delivery to your doorstep.
+            ${t.buyerRoleDesc}
           </p>
           <ul style="list-style:none; padding:0; margin:0 0 1.5rem; font-size:0.85rem; color:#2c3e3b; display:flex; flex-direction:column; gap:8px;">
             <li style="display:flex; align-items:center; gap:8px;">
-              <span style="color:#00665e;">${IconCheckCircle(16)}</span> 100% farm-traceable origin & harvest date
+              <span style="color:#00665e;">${IconCheckCircle(16)}</span> ${t.buyerBenefit1}
             </li>
             <li style="display:flex; align-items:center; gap:8px;">
-              <span style="color:#00665e;">${IconCheckCircle(16)}</span> Direct transparent price counter-offers
+              <span style="color:#00665e;">${IconCheckCircle(16)}</span> ${t.buyerBenefit2}
             </li>
             <li style="display:flex; align-items:center; gap:8px;">
-              <span style="color:#00665e;">${IconCheckCircle(16)}</span> Digital escrow with automated release on POD
+              <span style="color:#00665e;">${IconCheckCircle(16)}</span> ${t.buyerBenefit3}
             </li>
           </ul>
           <button id="btn-continue-buyer" type="button" class="c-btn c-btn-outline c-btn-block" style="font-weight:700; padding:0.75rem; border-radius:10px;">
-            Select Buyer & Continue
+            ${t.btnContinueBuyer}
           </button>
         </div>
 
       </div>
 
       <div style="font-size:0.85rem; color:#718280;">
-        Choosing <strong>Farmer</strong> takes you through produce upload, price forecasting, and the complete deal-to-logistics cycle.
+        ${t.step1FooterNote}
       </div>
     </div>
   `;
@@ -227,18 +289,18 @@ function renderStep1RoleSelection(role) {
 // -------------------------------------------------------------
 // STEP 2: FARMER IDENTITY & MOBILE ONBOARDING
 // -------------------------------------------------------------
-function renderStep2FarmerProfile(farmer) {
+function renderStep2FarmerProfile(farmer, t) {
   return `
     <div style="max-width:720px; margin:0 auto;">
       <div style="text-align:center; margin-bottom:2rem;">
         <div style="display:inline-flex; align-items:center; gap:6px; color:#00665e; background:#eaf5f3; padding:4px 12px; border-radius:999px; font-size:0.8rem; font-weight:700; margin-bottom:0.75rem;">
-          <span>Step 2 of 7</span> &bull; <span>Farmer Onboarding</span>
+          <span>${t.step2Tag}</span>
         </div>
         <h2 style="font-size:1.85rem; font-weight:800; color:#1a2e2b; margin-bottom:0.4rem;">
-          Enter Your Name & Mobile Number
+          ${t.step2Heading}
         </h2>
         <p style="font-size:0.95rem; color:#5c6c69; margin:0;">
-          Instant verified digital identity for Kisan partners with zero paperwork.
+          ${t.step2Subheading}
         </p>
       </div>
 
@@ -246,11 +308,11 @@ function renderStep2FarmerProfile(farmer) {
         <div style="display:flex; align-items:center; gap:10px;">
           <span style="color:#00665e;">${IconShield(20)}</span>
           <div style="font-size:0.85rem; color:#1a2e2b;">
-            <strong>Aadhaar & Kisan Credit Card (KCC) Ready</strong> &bull; Direct Benefit Transfer (DBT) enabled
+            ${t.step2Badge}
           </div>
         </div>
-        <button id="demo-fill-farmer-btn" class="c-btn c-btn-sm" style="background:#00665e; color:#ffffff; font-size:0.75rem; padding:0.35rem 0.85rem; border-radius:999px; font-weight:700; white-space:nowrap; border:none; cursor:pointer;">
-          Auto-Fill Rajesh Patil
+        <button id="demo-fill-farmer-btn" type="button" class="c-btn c-btn-sm" style="background:#00665e; color:#ffffff; font-size:0.75rem; padding:0.35rem 0.85rem; border-radius:999px; font-weight:700; white-space:nowrap; border:none; cursor:pointer;">
+          ${t.btnAutoFillFarmer}
         </button>
       </div>
 
@@ -258,18 +320,18 @@ function renderStep2FarmerProfile(farmer) {
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
           <div>
             <label class="label-sm-default" style="display:block; margin-bottom:0.4rem; font-weight:700; color:#1a2e2b;">
-              Farmer Full Name *
+              ${t.labelFarmerName}
             </label>
-            <input type="text" id="demo-farmer-name" required value="${farmer.name}" class="c-input" placeholder="e.g. Rajesh Patil" style="width:100%;">
+            <input type="text" id="demo-farmer-name" required value="${farmer.name}" class="c-input" placeholder="Rajesh Patil" style="width:100%;">
           </div>
           <div>
             <label class="label-sm-default" style="display:block; margin-bottom:0.4rem; font-weight:700; color:#1a2e2b;">
-              Mobile Number (Aadhaar / WhatsApp OTP) *
+              ${t.labelFarmerPhone}
             </label>
             <div style="position:relative;">
               <input type="tel" id="demo-farmer-phone" required value="${farmer.phone}" class="c-input" placeholder="+91 98230 45120" style="width:100%; padding-right:85px;">
               <span style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:#00665e; color:#ffffff; font-size:0.68rem; font-weight:700; padding:2px 7px; border-radius:4px;">
-                VERIFIED
+                ${t.badgeVerified}
               </span>
             </div>
           </div>
@@ -277,37 +339,37 @@ function renderStep2FarmerProfile(farmer) {
 
         <div>
           <label class="label-sm-default" style="display:block; margin-bottom:0.4rem; font-weight:700; color:#1a2e2b;">
-            Village & District Location *
+            ${t.labelLocation}
           </label>
           <div style="position:relative;">
-            <input type="text" id="demo-farmer-location" required value="${farmer.location}" class="c-input" placeholder="Village, Taluka, District, State" style="width:100%;">
+            <input type="text" id="demo-farmer-location" required value="${farmer.location}" class="c-input" placeholder="Pimpalgaon Baswant, Nashik, Maharashtra" style="width:100%;">
           </div>
           <div style="font-size:0.75rem; color:#718280; margin-top:0.25rem;">
-            Used by AI Smart Logistics engine to map optimal transport routes to nearest cities.
+            ${t.locationHint}
           </div>
         </div>
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
           <div>
             <label class="label-sm-default" style="display:block; margin-bottom:0.4rem; font-weight:700; color:#1a2e2b;">
-              Registered FPO / Cooperative (Optional)
+              ${t.labelFpo}
             </label>
-            <input type="text" id="demo-farmer-fpo" value="${farmer.fpoName}" class="c-input" placeholder="e.g. Nashik Kisan Samruddhi FPO" style="width:100%;">
+            <input type="text" id="demo-farmer-fpo" value="${farmer.fpoName}" class="c-input" placeholder="Nashik Kisan Samruddhi FPO" style="width:100%;">
           </div>
           <div>
             <label class="label-sm-default" style="display:block; margin-bottom:0.4rem; font-weight:700; color:#1a2e2b;">
-              Main Harvested Crops
+              ${t.labelCrops}
             </label>
-            <input type="text" id="demo-farmer-crops" value="${farmer.crops}" class="c-input" placeholder="e.g. Tomatoes, Onions" style="width:100%;">
+            <input type="text" id="demo-farmer-crops" value="${farmer.crops}" class="c-input" placeholder="Hybrid Tomatoes, Lasalgaon Onions" style="width:100%;">
           </div>
         </div>
 
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1.5rem; pt:1rem; border-top:1px solid #f0f4f4;">
           <button type="button" id="demo-step2-back-btn" class="c-btn c-btn-outline" style="font-weight:600;">
-            &larr; Back to Role Selection
+            ${t.btnBackToRole}
           </button>
           <button id="demo-step2-submit-btn" type="submit" class="c-btn c-btn-primary" style="font-weight:700; padding:0.75rem 1.75rem;">
-            Save & Enter Produce Details &rarr;
+            ${t.btnSaveProfile}
           </button>
         </div>
       </form>
@@ -318,24 +380,24 @@ function renderStep2FarmerProfile(farmer) {
 // -------------------------------------------------------------
 // STEP 3: ENTER PRODUCTION / UPLOAD PRODUCE & AI PRICE FORECAST
 // -------------------------------------------------------------
-function renderStep3ProduceAndForecast(product) {
+function renderStep3ProduceAndForecast(product, t, langCode) {
   return `
     <div>
       <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; margin-bottom:1.75rem; gap:1rem; border-bottom:1px solid #eef3f2; padding-bottom:1.25rem;">
         <div>
           <div style="display:inline-flex; align-items:center; gap:6px; color:#00665e; background:#eaf5f3; padding:4px 12px; border-radius:999px; font-size:0.8rem; font-weight:700; margin-bottom:0.5rem;">
-            <span>Step 3 of 7</span> &bull; <span>Produce Upload & AI Forecasting</span>
+            <span>${t.step3Tag}</span>
           </div>
           <h2 style="font-size:1.85rem; font-weight:800; color:#1a2e2b; margin:0;">
-            Upload Your Production & AI Mandi Forecast
+            ${t.step3Heading}
           </h2>
           <p style="font-size:0.95rem; color:#5c6c69; margin:0.3rem 0 0;">
-            Specify your harvest details and let our AI engine predict the optimal time to sell.
+            ${t.step3Subheading}
           </p>
         </div>
-        <button id="demo-fill-produce-btn" class="c-btn c-btn-sm" style="background:#004c46; color:#ffffff; font-weight:700; font-size:0.8rem; border-radius:8px; border:none; padding:0.5rem 1rem; display:inline-flex; align-items:center; gap:6px; cursor:pointer;">
+        <button id="demo-fill-produce-btn" type="button" class="c-btn c-btn-sm" style="background:#004c46; color:#ffffff; font-weight:700; font-size:0.8rem; border-radius:8px; border:none; padding:0.5rem 1rem; display:inline-flex; align-items:center; gap:6px; cursor:pointer;">
           ${IconSparkles(14)}
-          <span>1-Click Load 500kg Tomatoes Preset</span>
+          <span>${t.btnLoadTomatoPreset}</span>
         </button>
       </div>
 
@@ -345,13 +407,13 @@ function renderStep3ProduceAndForecast(product) {
         <div style="background:#fcfdfd; border:1px solid #e2ecea; border-radius:16px; padding:1.75rem;">
           <h3 style="font-size:1.15rem; font-weight:800; color:#1a2e2b; margin-bottom:1.25rem; display:flex; align-items:center; gap:8px;">
             <span style="color:#00665e;">${IconLeaf(18)}</span>
-            <span>Produce & Harvest Specification</span>
+            <span>${t.produceFormTitle}</span>
           </h3>
 
           <form id="demo-produce-form" style="display:flex; flex-direction:column; gap:1.1rem;">
             <div>
               <label class="label-sm-default" style="display:block; margin-bottom:0.35rem; font-weight:700; color:#1a2e2b;">
-                Produce Name & Variety *
+                ${t.labelProduceTitle}
               </label>
               <input type="text" id="demo-prod-title" required value="${product.title}" class="c-input" style="width:100%;">
             </div>
@@ -359,7 +421,7 @@ function renderStep3ProduceAndForecast(product) {
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
               <div>
                 <label class="label-sm-default" style="display:block; margin-bottom:0.35rem; font-weight:700; color:#1a2e2b;">
-                  Available Harvest Volume (kg) *
+                  ${t.labelVolumeKg}
                 </label>
                 <div style="position:relative;">
                   <input type="number" id="demo-prod-volume" required value="${product.volume}" min="50" step="50" class="c-input" style="width:100%; font-weight:700;">
@@ -368,13 +430,13 @@ function renderStep3ProduceAndForecast(product) {
                   </span>
                 </div>
                 <div style="font-size:0.72rem; color:#718280; margin-top:0.2rem;">
-                  = 25 standard 20kg agri-crates
+                  ${t.volumeHint}
                 </div>
               </div>
 
               <div>
                 <label class="label-sm-default" style="display:block; margin-bottom:0.35rem; font-weight:700; color:#1a2e2b;">
-                  Farmer Asking Price (₹/kg) *
+                  ${t.labelAskingPrice}
                 </label>
                 <div style="position:relative;">
                   <input type="number" id="demo-prod-price" required value="${product.askingPrice}" min="5" step="1" class="c-input" style="width:100%; font-weight:700; color:#00665e;">
@@ -383,14 +445,14 @@ function renderStep3ProduceAndForecast(product) {
                   </span>
                 </div>
                 <div style="font-size:0.72rem; color:#00665e; font-weight:600; margin-top:0.2rem;">
-                  Total Lot Value: ₹${(product.volume * product.askingPrice).toLocaleString('en-IN')}
+                  ${t.totalLotValue} ₹${(product.volume * product.askingPrice).toLocaleString('en-IN')}
                 </div>
               </div>
             </div>
 
             <div>
               <label class="label-sm-default" style="display:block; margin-bottom:0.35rem; font-weight:700; color:#1a2e2b;">
-                Crop Image (Actual Farm Produce Photo)
+                ${t.labelImage}
               </label>
               <div style="display:flex; gap:12px; align-items:center;">
                 <img src="${product.image}" id="demo-prod-preview-img" alt="Crop Preview" style="width:72px; height:72px; object-fit:cover; border-radius:10px; border:1px solid #d5e2e0;">
@@ -402,7 +464,7 @@ function renderStep3ProduceAndForecast(product) {
                     <option value="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=800&auto=format&fit=crop&q=80">Dehradun Aged Basmati Rice</option>
                   </select>
                   <div style="font-size:0.72rem; color:#718280; margin-top:0.25rem;">
-                    Optical quality AI detects ripeness and crate grade automatically.
+                    ${t.imageHint}
                   </div>
                 </div>
               </div>
@@ -410,17 +472,17 @@ function renderStep3ProduceAndForecast(product) {
 
             <div>
               <label class="label-sm-default" style="display:block; margin-bottom:0.35rem; font-weight:700; color:#1a2e2b;">
-                Batch Description & Grading Note
+                ${t.labelDescription}
               </label>
               <textarea id="demo-prod-desc" rows="3" class="c-input" style="width:100%; font-size:0.85rem; line-height:1.4;">${product.description}</textarea>
             </div>
 
             <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.5rem;">
               <button type="button" id="demo-step3-back-btn" class="c-btn c-btn-outline c-btn-sm" style="font-weight:600;">
-                &larr; Back
+                ${t.btnBack}
               </button>
               <button id="demo-step3-submit-btn" type="submit" class="c-btn c-btn-primary" style="font-weight:700; padding:0.7rem 1.5rem;">
-                Publish Produce to Marketplace &rarr;
+                ${t.btnPublishProduce}
               </button>
             </div>
           </form>
@@ -435,29 +497,29 @@ function renderStep3ProduceAndForecast(product) {
                 ${IconTrendingUp(16)}
               </span>
               <div>
-                <h3 style="font-size:1.05rem; font-weight:800; color:#1a2e2b; margin:0;">AI Mandi Price Intelligence</h3>
-                <div style="font-size:0.72rem; color:#00665e; font-weight:700;">Trained on Agmarknet & 12 APMC Mandis</div>
+                <h3 style="font-size:1.05rem; font-weight:800; color:#1a2e2b; margin:0;">${t.aiIntelligenceTitle}</h3>
+                <div style="font-size:0.72rem; color:#00665e; font-weight:700;">${t.aiTrainedBadge}</div>
               </div>
             </div>
             <span style="background:#00665e; color:#9ce9df; font-size:0.68rem; font-weight:800; padding:2px 8px; border-radius:6px; letter-spacing:0.5px;">
-              ACTIVE MODEL
+              ${t.aiActiveModel}
             </span>
           </div>
 
           <p style="font-size:0.85rem; color:#4a5a57; line-height:1.45; margin-bottom:1.25rem;">
-            Our machine learning model analyzes mandi arrivals, rainfall patterns in supply belts, and festival demand to recommend the optimal selling window:
+            ${t.aiIntelligenceDesc}
           </p>
 
           <!-- Price Bar Comparison Chart -->
           <div style="background:#ffffff; border:1px solid #dbeae8; border-radius:12px; padding:1.25rem; margin-bottom:1.25rem;">
             <div style="font-size:0.75rem; font-weight:700; color:#718280; text-transform:uppercase; margin-bottom:1rem; letter-spacing:0.5px;">
-              Mandi Benchmark vs. Future Rate Forecast (₹/kg)
+              ${t.chartTitle}
             </div>
 
             <!-- APMC Today -->
             <div style="margin-bottom:0.85rem;">
               <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:0.25rem;">
-                <span style="color:#64748b; font-weight:600;">Traditional APMC Mandi Today (Middlemen)</span>
+                <span style="color:#64748b; font-weight:600;">${t.chartApmcToday}</span>
                 <span style="color:#e11d48; font-weight:800;">₹${product.mandiRateToday} / kg</span>
               </div>
               <div style="height:12px; background:#f1f5f9; border-radius:999px; overflow:hidden;">
@@ -465,10 +527,10 @@ function renderStep3ProduceAndForecast(product) {
               </div>
             </div>
 
-            <!-- KISAN Direct Today -->
+            <!-- Kisan Connect Direct Today -->
             <div style="margin-bottom:0.85rem;">
               <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:0.25rem;">
-                <span style="color:#004c46; font-weight:700;">KISAN Direct Today (Fair Price)</span>
+                <span style="color:#004c46; font-weight:700;">${t.chartKcToday}</span>
                 <span style="color:#00665e; font-weight:800;">₹${product.askingPrice} / kg (+87.5%)</span>
               </div>
               <div style="height:12px; background:#eaf5f3; border-radius:999px; overflow:hidden;">
@@ -479,7 +541,7 @@ function renderStep3ProduceAndForecast(product) {
             <!-- 7-Day Forecast -->
             <div style="margin-bottom:0.85rem;">
               <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:0.25rem;">
-                <span style="color:#0369a1; font-weight:700;">AI Forecast: Next 7 Days (Supply Dip)</span>
+                <span style="color:#0369a1; font-weight:700;">${t.chartForecast7}</span>
                 <span style="color:#0284c7; font-weight:800;">₹${product.forecast7Days} / kg (+15.5%)</span>
               </div>
               <div style="height:12px; background:#e0f2fe; border-radius:999px; overflow:hidden;">
@@ -490,7 +552,7 @@ function renderStep3ProduceAndForecast(product) {
             <!-- 14-Day Forecast -->
             <div>
               <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:0.25rem;">
-                <span style="color:#15803d; font-weight:700;">AI Forecast: 14 Days (Peak Festival Rate)</span>
+                <span style="color:#15803d; font-weight:700;">${t.chartForecast14}</span>
                 <span style="color:#16a34a; font-weight:800;">₹${product.forecast14Days} / kg (+28.8%)</span>
               </div>
               <div style="height:12px; background:#dcfce7; border-radius:999px; overflow:hidden;">
@@ -500,19 +562,32 @@ function renderStep3ProduceAndForecast(product) {
 
           </div>
 
-          <!-- AI Recommendation Alert Box -->
-          <div style="background:#ffffff; border:1px solid #9ce9df; border-left:4px solid #00665e; border-radius:10px; padding:1rem; margin-bottom:1rem;">
-            <div style="display:flex; align-items:center; gap:6px; font-weight:800; font-size:0.85rem; color:#004c46; margin-bottom:0.35rem;">
-              ${IconSparkles(15)}
-              <span>AI Recommendation: Stagger Dispatch for Peak Profit</span>
+          <!-- AI Recommendation Alert Box with Rural Audio Guidance Button -->
+          <div style="background:#ffffff; border:1px solid #9ce9df; border-left:4px solid #00665e; border-radius:12px; padding:1.15rem; margin-bottom:1rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+              <div style="display:flex; align-items:center; gap:6px; font-weight:800; font-size:0.85rem; color:#004c46;">
+                ${IconSparkles(15)}
+                <span>${t.aiAdviceTitle}</span>
+              </div>
+              <!-- Voice Guidance Button for Non-Literate Farmers -->
+              <button id="demo-voice-advice-btn" type="button" class="voice-audio-btn" title="Audio Guidance for Rural Farmers" style="background:#eaf5f3; color:#00665e; border:1px solid #9ce9df; border-radius:999px; padding:3px 10px; font-size:0.75rem; font-weight:800; cursor:pointer; display:inline-flex; align-items:center; gap:5px; transition:all 0.2s;">
+                <span style="display:flex; align-items:center;">${IconVolume2(13)}</span>
+                <span id="demo-voice-btn-text">${t.btnListenVoice}</span>
+              </button>
             </div>
-            <p style="font-size:0.82rem; color:#2c3e3b; margin:0; line-height:1.45;">
-              ${product.forecastAdvice}
+            
+            <p id="demo-advice-text-content" style="font-size:0.84rem; color:#2c3e3b; margin:0 0 0.5rem; line-height:1.45;">
+              ${t.aiAdviceText}
             </p>
+
+            <div style="display:flex; align-items:center; gap:6px; font-size:0.72rem; color:#00665e; background:#f4faf8; padding:4px 8px; border-radius:6px;">
+              <span>${IconVolume2(11)}</span>
+              <span><strong>Accessibility Note:</strong> Uneducated farmers can tap the speaker button to hear AI advice read aloud in their mother tongue.</span>
+            </div>
           </div>
 
           <div style="background:#eaf5f3; border-radius:8px; padding:0.65rem 0.85rem; font-size:0.78rem; color:#004c46; display:flex; align-items:center; justify-content:space-between;">
-            <span>Projected Extra Profit on 500kg Lot:</span>
+            <span>${t.aiExtraProfitLabel}</span>
             <strong style="font-size:0.95rem; color:#00665e;">+₹3,500 to +₹6,500</strong>
           </div>
 
@@ -526,7 +601,7 @@ function renderStep3ProduceAndForecast(product) {
 // -------------------------------------------------------------
 // STEP 4: MARKETPLACE LISTING & LIVE BUYER OFFER NEGOTIATION
 // -------------------------------------------------------------
-function renderStep4MarketNegotiation(product, negotiation) {
+function renderStep4MarketNegotiation(product, negotiation, t) {
   const isAgreed = negotiation.status === 'agreed';
   const isCountered = negotiation.status === 'countered';
 
@@ -535,38 +610,38 @@ function renderStep4MarketNegotiation(product, negotiation) {
       <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; margin-bottom:1.75rem; gap:1rem; border-bottom:1px solid #eef3f2; padding-bottom:1.25rem;">
         <div>
           <div style="display:inline-flex; align-items:center; gap:6px; color:#00665e; background:#eaf5f3; padding:4px 12px; border-radius:999px; font-size:0.8rem; font-weight:700; margin-bottom:0.5rem;">
-            <span>Step 4 of 7</span> &bull; <span>Marketplace Live & Negotiation</span>
+            <span>${t.step4Tag}</span>
           </div>
           <h2 style="font-size:1.85rem; font-weight:800; color:#1a2e2b; margin:0;">
-            Produce Listed & Live Buyer Price Negotiation
+            ${t.step4Heading}
           </h2>
           <p style="font-size:0.95rem; color:#5c6c69; margin:0.3rem 0 0;">
-            Your produce is published live on KISAN. Buyers submit direct bids; farmers hold the pricing power.
+            ${t.step4Subheading}
           </p>
         </div>
         <div style="background:#eaf5f3; border:1px solid #9ce9df; border-radius:8px; padding:0.4rem 0.85rem; font-size:0.8rem; color:#004c46; font-weight:700; display:flex; align-items:center; gap:6px;">
           <span style="display:flex; align-items:center; color:#00665e;">${IconCheckCircle(16)}</span>
-          <span>Live in Mumbai Wholesale & Consumer Catalog</span>
+          <span>${t.badgeMarketLive}</span>
         </div>
       </div>
 
       <div style="display:grid; grid-template-columns:1fr 1.15fr; gap:2rem; align-items:start;">
         
-        <!-- Left: How the Buyer Views the Listing on KISAN -->
+        <!-- Left: How the Buyer Views the Listing on Kisan Connect -->
         <div style="background:#ffffff; border:1px solid #e2ecea; border-radius:16px; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.04);">
           <div style="position:relative;">
             <img src="${product.image}" alt="${product.title}" style="width:100%; height:200px; object-fit:cover;">
             <div style="position:absolute; top:12px; left:12px; background:rgba(0,51,46,0.9); color:#ffffff; font-size:0.75rem; font-weight:700; padding:4px 10px; border-radius:6px;">
-              500 KG LOT &bull; GRADE-A
+              ${t.lotBadge}
             </div>
             <div style="position:absolute; bottom:12px; right:12px; background:#ffffff; color:#00665e; font-size:0.85rem; font-weight:800; padding:4px 10px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
-              ₹${product.askingPrice} / kg Asking
+              ${t.askingBadge}
             </div>
           </div>
 
           <div style="padding:1.25rem;">
             <div style="font-size:0.75rem; font-weight:700; color:#00665e; text-transform:uppercase; margin-bottom:0.25rem;">
-              Direct from Farmer Rajesh Patil &bull; Pimpalgaon Nashik
+              ${t.farmerDirectOrigin}
             </div>
             <h3 style="font-size:1.1rem; font-weight:800; color:#1a2e2b; margin-bottom:0.5rem; line-height:1.3;">
               ${product.title}
@@ -581,7 +656,7 @@ function renderStep4MarketNegotiation(product, negotiation) {
                 <strong style="color:#1a2e2b; font-size:0.95rem;">500 kg (25 crates)</strong>
               </div>
               <div>
-                <div style="color:#718280;">Mandi APMC Rate</div>
+                <div style="color:#718280;">Mandi Rate</div>
                 <span style="color:#e11d48; text-decoration:line-through;">₹${product.mandiRateToday}/kg</span>
               </div>
               <div>
@@ -598,14 +673,14 @@ function renderStep4MarketNegotiation(product, negotiation) {
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem; border-bottom:1px solid #eef3f2; padding-bottom:0.85rem;">
             <div>
               <div style="font-size:0.75rem; font-weight:700; color:#00665e; text-transform:uppercase;">
-                Verified Institutional Commercial Buyer
+                ${t.buyerBoxTitle}
               </div>
               <h3 style="font-size:1.15rem; font-weight:800; color:#1a2e2b; margin:0.15rem 0 0;">
                 ${negotiation.buyerName}
               </h3>
             </div>
             <span style="background:#eaf5f3; color:#00665e; font-size:0.72rem; font-weight:700; padding:3px 8px; border-radius:999px;">
-              GST & FSSAI Verified
+              ${t.badgeGstVerified}
             </span>
           </div>
 
@@ -614,14 +689,14 @@ function renderStep4MarketNegotiation(product, negotiation) {
             
             <!-- Farmer Initial Asking Price -->
             <div style="align-self:flex-end; max-width:85%; background:#00665e; color:#ffffff; padding:0.85rem 1rem; border-radius:14px 14px 2px 14px; font-size:0.85rem; box-shadow:0 2px 8px rgba(0,102,94,0.2);">
-              <div style="font-size:0.7rem; color:#9ce9df; font-weight:700; margin-bottom:2px;">You (Farmer Rajesh Patil)</div>
-              <div>Listed 500kg Grade-A Tomatoes at <strong>₹${negotiation.farmerAskingPrice}/kg</strong> (Total: ₹${(product.volume * negotiation.farmerAskingPrice).toLocaleString('en-IN')}).</div>
+              <div style="font-size:0.7rem; color:#9ce9df; font-weight:700; margin-bottom:2px;">Rajesh Patil (Farmer)</div>
+              <div>Listed 500kg Grade-A Tomatoes @ <strong>₹${negotiation.farmerAskingPrice}/kg</strong> (Total: ₹${(product.volume * negotiation.farmerAskingPrice).toLocaleString('en-IN')}).</div>
             </div>
 
             <!-- Buyer Initial Offer -->
             <div style="align-self:flex-start; max-width:85%; background:#f1f5f9; color:#1e293b; padding:0.85rem 1rem; border-radius:14px 14px 14px 2px; font-size:0.85rem; border:1px solid #e2e8f0;">
               <div style="font-size:0.7rem; color:#64748b; font-weight:700; margin-bottom:2px;">Subhash Commercial Kitchens (Buyer)</div>
-              <div>"We need 500kg daily for central catering kitchens in Mumbai Vashi. Can offer <strong>₹${negotiation.buyerInitialOffer}/kg</strong> for instant dispatch tonight."</div>
+              <div>${t.buyerInitialMsg}</div>
               <div style="margin-top:4px; font-size:0.75rem; color:#0284c7; font-weight:700;">
                 Buyer Initial Bid: ₹${(product.volume * negotiation.buyerInitialOffer).toLocaleString('en-IN')} (₹${negotiation.buyerInitialOffer}/kg)
               </div>
@@ -630,13 +705,13 @@ function renderStep4MarketNegotiation(product, negotiation) {
             <!-- Counter-Offer Thread if Countered or Agreed -->
             ${isCountered || isAgreed ? `
               <div style="align-self:flex-end; max-width:85%; background:#004c46; color:#ffffff; padding:0.85rem 1rem; border-radius:14px 14px 2px 14px; font-size:0.85rem;">
-                <div style="font-size:0.7rem; color:#9ce9df; font-weight:700; margin-bottom:2px;">You (Farmer Rajesh Patil)</div>
-                <div>"These are Grade-A vine-ripened tomatoes, no storage rot. My counter is <strong>₹${negotiation.farmerCounterPrice}/kg</strong>. Deal?"</div>
+                <div style="font-size:0.7rem; color:#9ce9df; font-weight:700; margin-bottom:2px;">Rajesh Patil (Farmer)</div>
+                <div>${t.farmerCounterMsg}</div>
               </div>
 
               <div style="align-self:flex-start; max-width:85%; background:#dcfce7; color:#166534; padding:0.85rem 1rem; border-radius:14px 14px 14px 2px; font-size:0.85rem; border:1px solid #bbf7d0;">
                 <div style="font-size:0.7rem; color:#15803d; font-weight:700; margin-bottom:2px;">Subhash Commercial Kitchens (Buyer)</div>
-                <div>"Agreed! <strong>₹${negotiation.agreedPrice}/kg</strong> for 500kg is fair. We have locked ₹${negotiation.totalAgreedAmount.toLocaleString('en-IN')} in KISAN Escrow."</div>
+                <div>${t.buyerAgreedMsg}</div>
               </div>
             ` : ''}
 
@@ -648,16 +723,16 @@ function renderStep4MarketNegotiation(product, negotiation) {
             ${!isAgreed ? `
               <div style="margin-bottom:1rem;">
                 <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.5rem;">
-                  <span style="font-weight:700; color:#1a2e2b;">Your Counter-Offer Price:</span>
+                  <span style="font-weight:700; color:#1a2e2b;">${t.labelCounterPrice}</span>
                   <span style="font-weight:800; color:#00665e;" id="demo-counter-preview-val">₹${negotiation.farmerCounterPrice} / kg (₹${(product.volume * negotiation.farmerCounterPrice).toLocaleString('en-IN')})</span>
                 </div>
                 <div style="display:flex; gap:8px;">
                   <input type="number" id="demo-counter-price-input" value="${negotiation.farmerCounterPrice}" min="35" max="50" class="c-input" style="width:110px; font-weight:800; font-size:1rem; color:#00665e;">
-                  <button id="demo-submit-counter-btn" class="c-btn c-btn-primary" style="flex:1; font-weight:700;">
-                    Send Counter-Offer (₹${negotiation.farmerCounterPrice}/kg)
+                  <button id="demo-submit-counter-btn" type="button" class="c-btn c-btn-primary" style="flex:1; font-weight:700;">
+                    ${t.btnSendCounter} (₹${negotiation.farmerCounterPrice}/kg)
                   </button>
-                  <button id="demo-accept-initial-btn" class="c-btn c-btn-outline" style="font-weight:600; font-size:0.82rem;">
-                    Accept ₹${negotiation.buyerInitialOffer}/kg
+                  <button id="demo-accept-initial-btn" type="button" class="c-btn c-btn-outline" style="font-weight:600; font-size:0.82rem;">
+                    ${t.btnAcceptInitial}
                   </button>
                 </div>
               </div>
@@ -666,18 +741,18 @@ function renderStep4MarketNegotiation(product, negotiation) {
               <div style="background:#eaf5f3; border:2px solid #00665e; border-radius:12px; padding:1rem; margin-bottom:1.25rem; text-align:center;">
                 <div style="display:inline-flex; align-items:center; gap:6px; color:#00665e; font-weight:800; font-size:1rem; margin-bottom:0.25rem;">
                   ${IconCheckCircle(20)}
-                  <span>Deal Agreed & Confirmed at ₹${negotiation.agreedPrice}/kg!</span>
+                  <span>${t.dealAgreedTitle}</span>
                 </div>
                 <div style="font-size:0.9rem; color:#2c3e3b;">
-                  Total Transaction Value: <strong>₹${negotiation.totalAgreedAmount.toLocaleString('en-IN')}</strong> (500kg &times; ₹${negotiation.agreedPrice}/kg)
+                  ${t.dealTotalVal}
                 </div>
                 <div style="font-size:0.75rem; color:#00665e; font-weight:600; margin-top:0.25rem;">
-                  Funds deposited into KISAN Digital Escrow &bull; Ready for Logistics
+                  ${t.escrowLockedNote}
                 </div>
               </div>
 
-              <button id="demo-proceed-to-logistics-btn" class="c-btn c-btn-primary c-btn-block c-btn-lg" style="font-weight:800; font-size:1.05rem; padding:0.9rem; border-radius:10px; box-shadow:0 4px 14px rgba(0,102,94,0.3); display:flex; align-items:center; justify-content:center; gap:8px;">
-                <span>Click Sell & Book Smart Logistics</span>
+              <button id="demo-proceed-to-logistics-btn" type="button" class="c-btn c-btn-primary c-btn-block c-btn-lg" style="font-weight:800; font-size:1.05rem; padding:0.9rem; border-radius:10px; box-shadow:0 4px 14px rgba(0,102,94,0.3); display:flex; align-items:center; justify-content:center; gap:8px;">
+                <span>${t.btnSellAndBookLogistics}</span>
                 ${IconArrowRight(18)}
               </button>
             `}
@@ -685,8 +760,8 @@ function renderStep4MarketNegotiation(product, negotiation) {
           </div>
 
           <div style="display:flex; justify-content:flex-start; margin-top:1rem;">
-            <button id="demo-step4-back-btn" class="c-btn c-btn-outline c-btn-sm" style="font-weight:600;">
-              &larr; Back to Produce Details
+            <button id="demo-step4-back-btn" type="button" class="c-btn c-btn-outline c-btn-sm" style="font-weight:600;">
+              ${t.btnBack}
             </button>
           </div>
 
@@ -700,24 +775,24 @@ function renderStep4MarketNegotiation(product, negotiation) {
 // -------------------------------------------------------------
 // STEP 5: AI SMART LOGISTICS BOOKING
 // -------------------------------------------------------------
-function renderStep5SmartLogistics(product, logistics) {
+function renderStep5SmartLogistics(product, logistics, t) {
   return `
     <div>
       <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; margin-bottom:1.75rem; gap:1rem; border-bottom:1px solid #eef3f2; padding-bottom:1.25rem;">
         <div>
           <div style="display:inline-flex; align-items:center; gap:6px; color:#00665e; background:#eaf5f3; padding:4px 12px; border-radius:999px; font-size:0.8rem; font-weight:700; margin-bottom:0.5rem;">
-            <span>Step 5 of 7</span> &bull; <span>AI Smart Logistics</span>
+            <span>${t.step5Tag}</span>
           </div>
           <h2 style="font-size:1.85rem; font-weight:800; color:#1a2e2b; margin:0;">
-            AI Intelligent Logistics & Vehicle Pairing
+            ${t.step5Heading}
           </h2>
           <p style="font-size:0.95rem; color:#5c6c69; margin:0.3rem 0 0;">
-            Our AI matches your 500kg cargo with the optimal vehicle, optimizes route efficiency, and cuts transport costs by 48.6%.
+            ${t.step5Subheading}
           </p>
         </div>
         <div style="background:#e0f2fe; border:1px solid #bae6fd; border-radius:8px; padding:0.4rem 0.85rem; font-size:0.8rem; color:#0369a1; font-weight:700; display:flex; align-items:center; gap:6px;">
           <span>${IconTruck(16)}</span>
-          <span>Zero Transshipment Cold-Airflow Corridors</span>
+          <span>${t.badgeColdCorridor}</span>
         </div>
       </div>
 
@@ -727,7 +802,7 @@ function renderStep5SmartLogistics(product, logistics) {
         <!-- Vehicle Capacity & Pairing Card -->
         <div style="background:#ffffff; border:2px solid #00665e; border-radius:18px; padding:1.75rem; box-shadow:0 8px 24px rgba(0,102,94,0.06); position:relative;">
           <div style="position:absolute; top:14px; right:14px; background:#00665e; color:#ffffff; font-size:0.7rem; font-weight:800; padding:3px 10px; border-radius:999px;">
-            AI OPTIMAL MATCH
+            ${t.badgeAiOptimal}
           </div>
           
           <div style="display:flex; align-items:center; gap:12px; margin-bottom:1.25rem;">
@@ -739,7 +814,7 @@ function renderStep5SmartLogistics(product, logistics) {
                 ${logistics.vehicleType}
               </h3>
               <div style="font-size:0.8rem; color:#718280;">
-                Agri-Ventilated Mini-Truck &bull; GPS & IoT Cold Monitoring
+                ${t.vehicleSubtitle}
               </div>
             </div>
           </div>
@@ -747,8 +822,8 @@ function renderStep5SmartLogistics(product, logistics) {
           <!-- Load Factor Gauge -->
           <div style="background:#f8faf9; border:1px solid #e2ecea; border-radius:14px; padding:1.25rem; margin-bottom:1.25rem;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
-              <span style="font-size:0.85rem; font-weight:700; color:#1a2e2b;">Vehicle Payload Utilization:</span>
-              <span style="font-size:1.1rem; font-weight:800; color:#00665e;">${logistics.loadFactorPercent}% Utilized</span>
+              <span style="font-size:0.85rem; font-weight:700; color:#1a2e2b;">${t.payloadLabel}</span>
+              <span style="font-size:1.1rem; font-weight:800; color:#00665e;">${t.payloadUtilized}</span>
             </div>
 
             <div style="height:16px; background:#e2ecea; border-radius:999px; overflow:hidden; position:relative; margin-bottom:0.75rem;">
@@ -756,13 +831,13 @@ function renderStep5SmartLogistics(product, logistics) {
             </div>
 
             <div style="display:flex; justify-content:space-between; font-size:0.78rem; color:#718280;">
-              <span>Your Produce: <strong>${logistics.volumeKg} kg</strong> (25 crates)</span>
-              <span>Truck Max Capacity: <strong>${logistics.vehicleCapacityKg} kg</strong></span>
+              <span>${t.payloadDetailYourCrop}</span>
+              <span>${t.payloadDetailCapacity}</span>
             </div>
           </div>
 
           <div style="font-size:0.82rem; color:#4a5a57; line-height:1.45;">
-            <strong>Why this match?</strong> A 500kg tomato load in an oversized 2-tonne truck causes crate bouncing and 12% bruising loss. The 650kg Tata Ace mini-truck perfectly holds 25 crates without stacking pressure, preventing transit spoilage.
+            ${t.whyMatchExplanation}
           </div>
         </div>
 
@@ -770,31 +845,27 @@ function renderStep5SmartLogistics(product, logistics) {
         <div style="background:#fcfdfd; border:1px solid #e2ecea; border-radius:18px; padding:1.75rem;">
           <h3 style="font-size:1.05rem; font-weight:800; color:#1a2e2b; margin-bottom:1.25rem; display:flex; align-items:center; gap:8px;">
             <span style="color:#00665e;">${IconNavigation(18)}</span>
-            <span>Optimized Express Transit Corridor</span>
+            <span>${t.routeCardTitle}</span>
           </h3>
 
           <div style="display:flex; flex-direction:column; gap:1rem; position:relative; padding-left:1.5rem; margin-bottom:1.25rem;">
-            <!-- Vertical Line -->
             <div style="position:absolute; left:6px; top:12px; bottom:12px; width:2px; background:#00665e;"></div>
 
-            <!-- Origin -->
             <div style="position:relative;">
               <div style="position:absolute; left:-1.5rem; top:2px; width:14px; height:14px; border-radius:50%; background:#00665e; border:3px solid #ffffff;"></div>
-              <div style="font-size:0.75rem; color:#718280; font-weight:700; text-transform:uppercase;">Pickup Point</div>
+              <div style="font-size:0.75rem; color:#718280; font-weight:700; text-transform:uppercase;">${t.pickupPoint}</div>
               <div style="font-size:0.9rem; font-weight:800; color:#1a2e2b;">${logistics.routeFrom}</div>
             </div>
 
-            <!-- Samruddhi Expressway Hub -->
             <div style="position:relative;">
               <div style="position:absolute; left:-1.5rem; top:2px; width:14px; height:14px; border-radius:50%; background:#9ce9df; border:3px solid #ffffff;"></div>
-              <div style="font-size:0.75rem; color:#00665e; font-weight:700; text-transform:uppercase;">Green Corridor</div>
-              <div style="font-size:0.85rem; font-weight:700; color:#2c3e3b;">Samruddhi Mahamarg Highway (Zero Traffic Jams)</div>
+              <div style="font-size:0.75rem; color:#00665e; font-weight:700; text-transform:uppercase;">${t.greenCorridor}</div>
+              <div style="font-size:0.85rem; font-weight:700; color:#2c3e3b;">Samruddhi Expressway Corridor</div>
             </div>
 
-            <!-- Destination -->
             <div style="position:relative;">
               <div style="position:absolute; left:-1.5rem; top:2px; width:14px; height:14px; border-radius:50%; background:#e11d48; border:3px solid #ffffff;"></div>
-              <div style="font-size:0.75rem; color:#718280; font-weight:700; text-transform:uppercase;">Delivery Terminal</div>
+              <div style="font-size:0.75rem; color:#718280; font-weight:700; text-transform:uppercase;">${t.deliveryTerminal}</div>
               <div style="font-size:0.9rem; font-weight:800; color:#1a2e2b;">${logistics.routeTo}</div>
             </div>
           </div>
@@ -802,15 +873,15 @@ function renderStep5SmartLogistics(product, logistics) {
           <div style="display:flex; justify-content:space-between; background:#ffffff; border:1px solid #dbeae8; border-radius:10px; padding:0.75rem 1rem; font-size:0.82rem;">
             <div>
               <div style="color:#718280;">Distance</div>
-              <strong style="color:#1a2e2b; font-size:0.95rem;">${logistics.distanceKm} km</strong>
+              <strong style="color:#1a2e2b; font-size:0.95rem;">${t.distKm}</strong>
             </div>
             <div>
-              <div style="color:#718280;">Est. Travel Time</div>
-              <strong style="color:#1a2e2b; font-size:0.95rem;">${logistics.transitTimeHours} hours</strong>
+              <div style="color:#718280;">Travel Time</div>
+              <strong style="color:#1a2e2b; font-size:0.95rem;">${t.travelTime}</strong>
             </div>
             <div>
-              <div style="color:#718280;">Mandi Delays Saved</div>
-              <strong style="color:#00665e; font-size:0.95rem;">-4.5 hours</strong>
+              <div style="color:#718280;">Delays Saved</div>
+              <strong style="color:#00665e; font-size:0.95rem;">${t.delaysSaved}</strong>
             </div>
           </div>
         </div>
@@ -820,27 +891,27 @@ function renderStep5SmartLogistics(product, logistics) {
       <!-- Side-by-Side Logistics Cost Comparison Table -->
       <div style="background:#ffffff; border:1px solid #e2ecea; border-radius:18px; padding:1.75rem; margin-bottom:2rem; box-shadow:0 4px 16px rgba(0,0,0,0.03);">
         <h3 style="font-size:1.15rem; font-weight:800; color:#1a2e2b; margin-bottom:0.4rem;">
-          Logistics Pricing Intelligence: KISAN vs. Traditional Middlemen
+          ${t.pricingCompTitle}
         </h3>
         <p style="font-size:0.85rem; color:#5c6c69; margin-bottom:1.25rem;">
-          Direct aggregate fleet contracts eliminate local trucking cartels and brokerage surcharges.
+          ${t.pricingCompDesc}
         </p>
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
           
-          <!-- KISAN Smart Logistics -->
+          <!-- Kisan Connect Smart Logistics -->
           <div style="background:#f4faf8; border:2px solid #00665e; border-radius:14px; padding:1.25rem;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
               <span style="font-size:0.85rem; font-weight:800; color:#00665e; text-transform:uppercase; letter-spacing:0.5px;">
-                KISAN AI Logistics
+                ${t.kcLogisticsTitle}
               </span>
               <span style="background:#00665e; color:#ffffff; font-size:0.68rem; font-weight:800; padding:2px 7px; border-radius:4px;">
-                CHEAPEST PRICE
+                ${t.badgeCheapestPrice}
               </span>
             </div>
             <div style="display:flex; align-items:baseline; gap:6px; margin-bottom:0.5rem;">
               <span style="font-size:2rem; font-weight:900; color:#00665e;">₹${logistics.kcPartnerCost.toLocaleString('en-IN')}</span>
-              <span style="font-size:0.85rem; color:#004c46; font-weight:700;">(Only ₹${logistics.kcPerKgCost}/kg)</span>
+              <span style="font-size:0.85rem; color:#004c46; font-weight:700;">(${t.kcLogisticsPerKg})</span>
             </div>
             <ul style="list-style:none; padding:0; margin:0; font-size:0.8rem; color:#2c3e3b; display:flex; flex-direction:column; gap:6px;">
               <li style="display:flex; align-items:center; gap:6px;">
@@ -859,15 +930,15 @@ function renderStep5SmartLogistics(product, logistics) {
           <div style="background:#fff9fa; border:1px solid #fed7aa; border-radius:14px; padding:1.25rem;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
               <span style="font-size:0.85rem; font-weight:700; color:#991b1b; text-transform:uppercase; letter-spacing:0.5px;">
-                Traditional Mandi Truckers
+                ${t.mandiLogisticsTitle}
               </span>
               <span style="background:#fee2e2; color:#991b1b; font-size:0.68rem; font-weight:700; padding:2px 7px; border-radius:4px;">
-                CARTEL PRICING
+                ${t.badgeCartelPricing}
               </span>
             </div>
             <div style="display:flex; align-items:baseline; gap:6px; margin-bottom:0.5rem;">
               <span style="font-size:2rem; font-weight:900; color:#e11d48; text-decoration:line-through;">₹${logistics.traditionalMandiTruckCost.toLocaleString('en-IN')}</span>
-              <span style="font-size:0.85rem; color:#991b1b; font-weight:700;">(₹${logistics.traditionalPerKgCost}/kg)</span>
+              <span style="font-size:0.85rem; color:#991b1b; font-weight:700;">(${t.mandiLogisticsPerKg})</span>
             </div>
             <ul style="list-style:none; padding:0; margin:0; font-size:0.8rem; color:#64748b; display:flex; flex-direction:column; gap:6px;">
               <li>&times; 2 Intermediate loading yards with fruit handling delays</li>
@@ -880,21 +951,21 @@ function renderStep5SmartLogistics(product, logistics) {
 
         <div style="margin-top:1.25rem; background:#eaf5f3; border-radius:10px; padding:0.85rem 1.25rem; display:flex; justify-content:space-between; align-items:center;">
           <div style="font-size:0.9rem; color:#1a2e2b;">
-            Farmer Transport Savings on This Single 500kg Dispatch:
+            ${t.transportSavingsLabel}
           </div>
           <strong style="font-size:1.15rem; color:#00665e;">
-            Save ₹${logistics.savingsAmount.toLocaleString('en-IN')} (${logistics.savingsPercent}% Cheaper!)
+            ${t.transportSavingsVal}
           </strong>
         </div>
       </div>
 
       <!-- Action Footer -->
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <button id="demo-step5-back-btn" class="c-btn c-btn-outline" style="font-weight:600;">
-          &larr; Back to Negotiation
+        <button id="demo-step5-back-btn" type="button" class="c-btn c-btn-outline" style="font-weight:600;">
+          ${t.btnBack}
         </button>
-        <button id="demo-book-logistics-btn" class="c-btn c-btn-primary c-btn-lg" style="font-weight:800; padding:0.85rem 2rem; border-radius:10px; box-shadow:0 4px 14px rgba(0,102,94,0.25);">
-          Confirm & Book AI Smart Logistics &rarr;
+        <button id="demo-book-logistics-btn" type="button" class="c-btn c-btn-primary c-btn-lg" style="font-weight:800; padding:0.85rem 2rem; border-radius:10px; box-shadow:0 4px 14px rgba(0,102,94,0.25);">
+          ${t.btnBookLogistics}
         </button>
       </div>
     </div>
@@ -904,21 +975,18 @@ function renderStep5SmartLogistics(product, logistics) {
 // -------------------------------------------------------------
 // STEP 6: TOTAL PROFIT REALIZATION & DISINTERMEDIATION IMPACT
 // -------------------------------------------------------------
-function renderStep6ProfitImpact(negotiation, logistics) {
-  // Traditional APMC economics on 500kg
+function renderStep6ProfitImpact(negotiation, logistics, t) {
   const traditionalGross = 24 * 500; // 12,000
   const arhatiyaFee = Math.round(traditionalGross * 0.08); // 960
   const mandiCess = 400;
   const traditionalTransport = 3600;
-  const damageWeightCut = 1200; // 10% weight cuts & damage
-  const traditionalNet = traditionalGross - (arhatiyaFee + mandiCess + traditionalTransport + damageWeightCut); // 5,840 (Rs 11.68/kg)
+  const damageWeightCut = 1200; // 10%
+  const traditionalNet = traditionalGross - (arhatiyaFee + mandiCess + traditionalTransport + damageWeightCut); // 5,840
 
-  // KISAN economics on 500kg
-  const kcGross = negotiation.totalAgreedAmount; // 21,500 (43 * 500)
-  const kcCommission = 0; // ZERO COMMISSION!
+  const kcGross = negotiation.totalAgreedAmount; // 21,500
   const kcTransport = logistics.kcPartnerCost; // 1,850
   const kcEscrowInsurance = 300;
-  const kcNet = kcGross - (kcTransport + kcEscrowInsurance); // 19,350 (Rs 38.70/kg)
+  const kcNet = kcGross - (kcTransport + kcEscrowInsurance); // 19,350
 
   const farmerGain = kcNet - traditionalNet; // 13,510
   const profitPercentageGain = Math.round((farmerGain / traditionalNet) * 100); // +231%
@@ -928,17 +996,17 @@ function renderStep6ProfitImpact(negotiation, logistics) {
       <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; margin-bottom:1.75rem; gap:1rem; border-bottom:1px solid #eef3f2; padding-bottom:1.25rem;">
         <div>
           <div style="display:inline-flex; align-items:center; gap:6px; color:#00665e; background:#eaf5f3; padding:4px 12px; border-radius:999px; font-size:0.8rem; font-weight:700; margin-bottom:0.5rem;">
-            <span>Step 6 of 7</span> &bull; <span>Farmer Profit Realization</span>
+            <span>${t.step6Tag}</span>
           </div>
           <h2 style="font-size:1.85rem; font-weight:800; color:#1a2e2b; margin:0;">
-            Total Profits Realized: +${profitPercentageGain}% Over Traditional Mandis
+            ${t.step6Heading}
           </h2>
           <p style="font-size:0.95rem; color:#5c6c69; margin:0.3rem 0 0;">
-            See the definitive financial breakdown comparing traditional middleman exploitation vs. KISAN direct trade.
+            ${t.step6Subheading}
           </p>
         </div>
         <div style="background:#dcfce7; border:1px solid #86efac; border-radius:8px; padding:0.4rem 0.85rem; font-size:0.85rem; color:#166534; font-weight:800;">
-          +₹${farmerGain.toLocaleString('en-IN')} Extra in Farmer Bank Account
+          ${t.extraCashBadge}
         </div>
       </div>
 
@@ -949,34 +1017,34 @@ function renderStep6ProfitImpact(negotiation, logistics) {
         <div style="background:#fff9fa; border:1px solid #fecdd3; border-radius:18px; padding:1.75rem; display:flex; flex-direction:column; justify-content:space-between;">
           <div>
             <div style="display:inline-block; background:#ffe4e6; color:#9f1239; font-size:0.75rem; font-weight:800; padding:3px 10px; border-radius:999px; margin-bottom:0.75rem; text-transform:uppercase;">
-              Status Quo (APMC Mandis)
+              ${t.statusQuoTitle}
             </div>
             <h3 style="font-size:1.25rem; font-weight:800; color:#9f1239; margin-bottom:0.25rem;">
-              Middleman Commission Channel
+              ${t.statusQuoSubtitle}
             </h3>
             <p style="font-size:0.82rem; color:#64748b; margin-bottom:1.25rem;">
-              500kg tomatoes sold at local Nashik APMC yard through Arhatiya commission agents:
+              ${t.statusQuoDesc}
             </p>
 
             <div style="display:flex; flex-direction:column; gap:0.65rem; font-size:0.85rem; margin-bottom:1.5rem;">
               <div style="display:flex; justify-content:space-between; color:#475569;">
-                <span>Gross Mandi Price (₹24/kg &times; 500kg):</span>
+                <span>${t.mandiGross}</span>
                 <strong style="color:#1e293b;">₹${traditionalGross.toLocaleString('en-IN')}</strong>
               </div>
               <div style="display:flex; justify-content:space-between; color:#e11d48;">
-                <span>Arhatiya Commission (8% cut):</span>
+                <span>${t.mandiArhatiya}</span>
                 <strong>-₹${arhatiyaFee.toLocaleString('en-IN')}</strong>
               </div>
               <div style="display:flex; justify-content:space-between; color:#e11d48;">
-                <span>Hamali, Weighment & Mandi Cess:</span>
+                <span>${t.mandiCess}</span>
                 <strong>-₹${mandiCess.toLocaleString('en-IN')}</strong>
               </div>
               <div style="display:flex; justify-content:space-between; color:#e11d48;">
-                <span>Middleman Truck Freight:</span>
+                <span>${t.mandiFreight}</span>
                 <strong>-₹${traditionalTransport.toLocaleString('en-IN')}</strong>
               </div>
               <div style="display:flex; justify-content:space-between; color:#e11d48;">
-                <span>Unloading Damage & Weight Cut (10%):</span>
+                <span>${t.mandiDamage}</span>
                 <strong>-₹${damageWeightCut.toLocaleString('en-IN')}</strong>
               </div>
             </div>
@@ -984,63 +1052,61 @@ function renderStep6ProfitImpact(negotiation, logistics) {
 
           <div style="background:#ffffff; border:1px solid #fecdd3; border-radius:12px; padding:1.25rem; text-align:center;">
             <div style="font-size:0.75rem; color:#64748b; font-weight:700; text-transform:uppercase;">
-              Traditional Farmer Take-Home Cash
+              ${t.traditionalTakeHome}
             </div>
             <div style="font-size:2.25rem; font-weight:900; color:#e11d48; line-height:1.1; margin:0.25rem 0;">
-              ₹${traditionalNet.toLocaleString('en-IN')}
+              ${t.traditionalNetVal}
             </div>
             <div style="font-size:0.8rem; color:#64748b; font-weight:600;">
-              Effective Realization: only <strong>₹${(traditionalNet / 500).toFixed(2)} / kg</strong>
+              ${t.traditionalPerKg}
             </div>
           </div>
         </div>
 
-        <!-- Transformative KISAN Direct Platform -->
+        <!-- Transformative Kisan Connect Direct Platform -->
         <div style="background:#f4faf8; border:2px solid #00665e; border-radius:18px; padding:1.75rem; display:flex; flex-direction:column; justify-content:space-between; box-shadow:0 8px 24px rgba(0,102,94,0.1);">
           <div>
             <div style="display:inline-block; background:#00665e; color:#ffffff; font-size:0.75rem; font-weight:800; padding:3px 10px; border-radius:999px; margin-bottom:0.75rem; text-transform:uppercase;">
-              KISAN Impact
+              ${t.kcImpactTitle}
             </div>
             <h3 style="font-size:1.25rem; font-weight:800; color:#004c46; margin-bottom:0.25rem;">
-              Direct Trade + AI Logistics Channel
+              ${t.kcImpactSubtitle}
             </h3>
             <p style="font-size:0.82rem; color:#4a5a57; margin-bottom:1.25rem;">
-              500kg tomatoes sold directly to Subhash Commercial Kitchens at negotiated price:
+              ${t.kcImpactDesc}
             </p>
 
             <div style="display:flex; flex-direction:column; gap:0.65rem; font-size:0.85rem; margin-bottom:1.5rem;">
               <div style="display:flex; justify-content:space-between; color:#1a2e2b;">
-                <span>Negotiated Final Price (₹${negotiation.agreedPrice}/kg &times; 500kg):</span>
+                <span>${t.kcGross}</span>
                 <strong style="color:#00665e; font-size:1rem;">₹${kcGross.toLocaleString('en-IN')}</strong>
               </div>
               <div style="display:flex; justify-content:space-between; color:#00665e; font-weight:700;">
-                <span>Middleman Commission Agents:</span>
-                <span>₹0 (ZERO COMMISSION!)</span>
+                <span>${t.kcZeroComm}</span>
               </div>
               <div style="display:flex; justify-content:space-between; color:#4a5a57;">
-                <span>AI Smart Logistics (Tata Ace Mini-Truck):</span>
+                <span>${t.kcFreight}</span>
                 <strong>-₹${kcTransport.toLocaleString('en-IN')}</strong>
               </div>
               <div style="display:flex; justify-content:space-between; color:#4a5a57;">
-                <span>Digital Escrow & Optical Quality Audit:</span>
+                <span>${t.kcEscrowFee}</span>
                 <strong>-₹${kcEscrowInsurance.toLocaleString('en-IN')}</strong>
               </div>
               <div style="display:flex; justify-content:space-between; color:#00665e; font-weight:700;">
-                <span>Transit Produce Loss / Spoilage:</span>
-                <span>0% (Crate Protection)</span>
+                <span>${t.kcZeroLoss}</span>
               </div>
             </div>
           </div>
 
           <div style="background:#ffffff; border:2px solid #00665e; border-radius:12px; padding:1.25rem; text-align:center;">
             <div style="font-size:0.75rem; color:#00665e; font-weight:800; text-transform:uppercase; letter-spacing:0.5px;">
-              Net Direct Bank Payout to Farmer Rajesh Patil
+              ${t.kcNetTitle}
             </div>
             <div style="font-size:2.35rem; font-weight:900; color:#00665e; line-height:1.1; margin:0.25rem 0;">
-              ₹${kcNet.toLocaleString('en-IN')}
+              ${t.kcNetVal}
             </div>
             <div style="font-size:0.82rem; color:#004c46; font-weight:700;">
-              Effective Realization: <strong>₹${(kcNet / 500).toFixed(2)} / kg</strong> &bull; (+231% Increase)
+              ${t.kcPerKg}
             </div>
           </div>
         </div>
@@ -1051,23 +1117,21 @@ function renderStep6ProfitImpact(negotiation, logistics) {
       <div style="background:linear-gradient(135deg, #00332e, #00665e); color:#ffffff; border-radius:16px; padding:1.5rem 1.75rem; margin-bottom:2rem; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1.25rem;">
         <div>
           <div style="font-size:0.75rem; font-weight:700; color:#9ce9df; text-transform:uppercase; margin-bottom:0.25rem;">
-            Key Financial Advantage (The KISAN Economic Revolution):
+            ${t.juryTakeawayTitle}
           </div>
-          <div style="font-size:1.1rem; font-weight:800;">
-            1. Farmer earned <span style="color:#9ce9df;">+₹${farmerGain.toLocaleString('en-IN')} more</span> on just 1 mini-truck dispatch.<br>
-            2. Buyer paid ₹43/kg vs Mumbai city wholesale mandi rate of ₹55/kg (Buyer saved ₹6,000).<br>
-            3. Pure disintermediation where money flows to the producer, not rent-seeking cartels.
+          <div style="font-size:1.05rem; font-weight:800; white-space:pre-line; line-height:1.5;">
+            ${t.juryTakeawayText}
           </div>
         </div>
       </div>
 
       <!-- Action Footer -->
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <button id="demo-step6-back-btn" class="c-btn c-btn-outline" style="font-weight:600;">
-          &larr; Back to Logistics
+        <button id="demo-step6-back-btn" type="button" class="c-btn c-btn-outline" style="font-weight:600;">
+          ${t.btnBack}
         </button>
-        <button id="demo-proceed-to-tracking-btn" class="c-btn c-btn-primary c-btn-lg" style="font-weight:800; padding:0.85rem 2rem; border-radius:10px; box-shadow:0 4px 14px rgba(0,102,94,0.3);">
-          View Amazon-Style Real-time Delivery Status &rarr;
+        <button id="demo-proceed-to-tracking-btn" type="button" class="c-btn c-btn-primary c-btn-lg" style="font-weight:800; padding:0.85rem 2rem; border-radius:10px; box-shadow:0 4px 14px rgba(0,102,94,0.3);">
+          ${t.btnGoToTracking}
         </button>
       </div>
     </div>
@@ -1077,96 +1141,102 @@ function renderStep6ProfitImpact(negotiation, logistics) {
 // -------------------------------------------------------------
 // STEP 7: AMAZON-STYLE REAL-TIME STATUS TRACKER
 // -------------------------------------------------------------
-function renderStep7LiveTracking(product, logistics, currentStage) {
+function renderStep7LiveTracking(product, logistics, currentStage, t, langCode) {
   const stages = [
     {
       id: 1,
-      title: 'Order Confirmed & Escrow Funded',
-      desc: 'Buyer deposited ₹21,500 into KISAN RBI-compliant digital escrow account.',
+      title: t.milestone1Title,
+      desc: t.milestone1Desc,
       time: 'Today, 08:30 AM',
       location: 'Digital Platform Escrow Vault',
       icon: IconCheckCircle
     },
     {
       id: 2,
-      title: 'Tata Ace Mini-Truck Dispatched to Farm Gate',
-      desc: 'Vehicle MH-15-EG-4920 assigned. Driver Sachin Gaikwad dispatched to Pimpalgaon packhouse.',
+      title: t.milestone2Title,
+      desc: t.milestone2Desc,
       time: 'Today, 09:15 AM',
       location: 'Nashik Logistics Hub',
       icon: IconTruck
     },
     {
       id: 3,
-      title: 'Produce Picked Up & Digital Weighment Done',
-      desc: '25 crates (500kg) loaded. Digital tare weighment signed via mobile app by Farmer Rajesh Patil.',
+      title: t.milestone3Title,
+      desc: t.milestone3Desc,
       time: 'Today, 10:45 AM',
       location: 'Pimpalgaon Baswant Farm Gate',
       icon: IconLeaf
     },
     {
       id: 4,
-      title: 'Arrived at Village Aggregation & Quality Centre',
-      desc: 'Automated optical grading passed: Grade-A firm, Brix 4.8 sweetness, zero surface bruising.',
+      title: t.milestone4Title,
+      desc: t.milestone4Desc,
       time: 'Today, 11:30 AM',
-      location: 'KISAN Nashik Sorting Hub',
+      location: 'Kisan Connect Nashik Sorting Hub',
       icon: IconShield
     },
     {
       id: 5,
-      title: 'Highway Express Transit via Samruddhi Corridor',
-      desc: 'Truck en route to Mumbai at 64 km/h. Cargo compartment temperature IoT steady at 16°C.',
+      title: t.milestone5Title,
+      desc: t.milestone5Desc,
       time: 'Today, 01:20 PM',
-      location: 'Igatpuri Expressway Stretch (110 km to destination)',
+      location: 'Igatpuri Expressway Corridor (110 km to destination)',
       icon: IconNavigation
     },
     {
       id: 6,
-      title: 'Arrived at Mumbai Vashi Wholesale Terminal Hub',
-      desc: 'Vehicle safely docked at Bay 4. Security seal intact. Gate entry scan verified.',
+      title: t.milestone6Title,
+      desc: t.milestone6Desc,
       time: 'Today, 02:45 PM',
       location: 'Mumbai APMC Agricultural Terminal Gate',
       icon: IconBuilding
     },
     {
       id: 7,
-      title: 'Delivered to Buyer & Digital POD Signed',
-      desc: 'Subhash Commercial Kitchens manager inspected produce crates and OTP confirmed delivery.',
+      title: t.milestone7Title,
+      desc: t.milestone7Desc,
       time: 'Today, 03:15 PM',
       location: 'Subhash Central Kitchen Hub, Vashi',
       icon: IconCheck
     },
     {
       id: 8,
-      title: 'Instant Direct DBT / UPI Bank Payout Credited',
-      desc: '₹19,350 net earnings instantly transferred to Farmer Rajesh Patil SBI Account (ending 8812) via NPCI DBT!',
+      title: t.milestone8Title,
+      desc: t.milestone8Desc,
       time: 'Today, 03:16 PM',
       location: 'State Bank of India (Direct Farmer A/C)',
       icon: IconCoins
     }
   ];
 
+  const currentMilestone = stages[currentStage - 1] || stages[0];
+
   return `
     <div>
       <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; margin-bottom:1.75rem; gap:1rem; border-bottom:1px solid #eef3f2; padding-bottom:1.25rem;">
         <div>
           <div style="display:inline-flex; align-items:center; gap:6px; color:#00665e; background:#eaf5f3; padding:4px 12px; border-radius:999px; font-size:0.8rem; font-weight:700; margin-bottom:0.5rem;">
-            <span>Step 7 of 7</span> &bull; <span>Live Delivery & Payment Tracking</span>
+            <span>${t.step7Tag}</span>
           </div>
           <h2 style="font-size:1.85rem; font-weight:800; color:#1a2e2b; margin:0;">
-            Amazon-Style Real-time Order & Payout Tracker
+            ${t.step7Heading}
           </h2>
           <p style="font-size:0.95rem; color:#5c6c69; margin:0.3rem 0 0;">
-            Transparent tracking from farm-gate pickup through the highway green corridor to instant direct bank transfer.
+            ${t.step7Subheading}
           </p>
         </div>
 
         <!-- Interactive Simulation Buttons -->
         <div style="display:flex; gap:0.5rem; align-items:center;">
-          <button id="demo-advance-stage-btn" class="c-btn c-btn-primary c-btn-sm" style="font-weight:700; padding:0.55rem 1rem; border-radius:8px; display:inline-flex; align-items:center; gap:6px;">
-            ${IconPlay(14)}
-            <span>Simulate Next Stage (${currentStage}/8)</span>
+          <button id="demo-voice-status-btn" type="button" class="voice-audio-btn c-btn c-btn-outline c-btn-sm" style="font-weight:700; border-radius:8px; display:inline-flex; align-items:center; gap:5px;" title="Listen to current tracking milestone status">
+            ${IconVolume2(14)}
+            <span>${langCode === 'mr' ? 'स्टेटस ऐका' : langCode === 'hi' ? 'स्थिति सुनें' : langCode === 'pa' ? 'ਸਟੇਟਸ ਸੁਣੋ' : 'Listen Status'}</span>
           </button>
-          <button id="demo-reset-stage-btn" class="c-btn c-btn-outline c-btn-sm" style="font-weight:600; padding:0.55rem 0.85rem; border-radius:8px;" title="Reset tracking to Stage 1">
+          <button id="demo-advance-stage-btn" type="button" class="c-btn c-btn-primary c-btn-sm" style="font-weight:700; padding:0.55rem 1rem; border-radius:8px; display:inline-flex; align-items:center; gap:6px;">
+            ${IconPlay(14)}
+            <span>${t.btnSimulateNext} (${currentStage}/8)</span>
+          </button>
+          <button id="demo-reset-stage-btn" type="button" class="c-btn c-btn-outline c-btn-sm" style="font-weight:600; padding:0.55rem 0.85rem; border-radius:8px;" title="Reset tracking to Stage 1">
             ${IconRotateCcw(13)}
           </button>
         </div>
@@ -1218,7 +1288,7 @@ function renderStep7LiveTracking(product, logistics, currentStage) {
                 ` : ''}
 
                 <!-- Status Node Icon -->
-                <div style="width:40px; height:40px; border-radius:50%; background:${isCompleted ? '#00665e' : '#f1f5f4'}; color:${isCompleted ? '#ffffff' : '#94a3a1'}; border:3px solid ${isCurrent ? '#9ce9df' : '#ffffff'}; box-shadow:${isCurrent ? '0 0 0 3px #00665e' : '0 2px 6px rgba(0,0,0,0.1)'}; display:flex; align-items:center; justify-content:center; flex-shrink:0; position:relative; z-index:2; transition:all 0.3s;">
+                <div class="${isCurrent ? 'timeline-node-active' : ''}" style="width:40px; height:40px; border-radius:50%; background:${isCompleted ? '#00665e' : '#f1f5f4'}; color:${isCompleted ? '#ffffff' : '#94a3a1'}; border:3px solid ${isCurrent ? '#9ce9df' : '#ffffff'}; box-shadow:${isCurrent ? '0 0 0 3px #00665e' : '0 2px 6px rgba(0,0,0,0.1)'}; display:flex; align-items:center; justify-content:center; flex-shrink:0; position:relative; z-index:2; transition:all 0.3s;">
                   ${st.icon(18)}
                 </div>
 
@@ -1227,7 +1297,7 @@ function renderStep7LiveTracking(product, logistics, currentStage) {
                   <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:8px; margin-bottom:0.25rem;">
                     <h4 style="font-size:1rem; font-weight:800; color:${isCompleted ? '#1a2e2b' : '#8c9c99'}; margin:0;">
                       ${st.title}
-                      ${isCurrent ? '<span style="background:#00665e; color:#ffffff; font-size:0.65rem; font-weight:700; padding:2px 7px; border-radius:4px; margin-left:8px; vertical-align:middle;">ACTIVE NOW</span>' : ''}
+                      ${isCurrent ? `<span style="background:#00665e; color:#ffffff; font-size:0.65rem; font-weight:700; padding:2px 7px; border-radius:4px; margin-left:8px; vertical-align:middle;">${t.activeMilestone}</span>` : ''}
                     </h4>
                     <span style="font-size:0.75rem; color:${isCompleted ? '#00665e' : '#94a3a1'}; font-weight:700;">
                       ${st.time}
@@ -1256,19 +1326,19 @@ function renderStep7LiveTracking(product, logistics, currentStage) {
       <div style="background:#f4faf8; border:2px solid #00665e; border-radius:18px; padding:1.75rem; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1.25rem;">
         <div>
           <h3 style="font-size:1.25rem; font-weight:800; color:#004c46; margin:0 0 0.3rem;">
-            End-to-End Workflow Demonstration Complete
+            ${t.workflowCompleteTitle}
           </h3>
           <p style="font-size:0.9rem; color:#4a5a57; margin:0;">
-            KISAN bridges the entire journey: from farm-gate listing and AI price timing, to buyer deal closure, smart logistics, and instant direct bank settlement.
+            ${t.workflowCompleteDesc}
           </p>
         </div>
 
         <div style="display:flex; gap:0.75rem;">
-          <button id="demo-restart-entire-btn" class="c-btn c-btn-primary" style="font-weight:700; padding:0.75rem 1.5rem; border-radius:10px;">
-            Restart Demo from Step 1 &rarr;
+          <button id="demo-restart-entire-btn" type="button" class="c-btn c-btn-primary" style="font-weight:700; padding:0.75rem 1.5rem; border-radius:10px;">
+            ${t.btnRestartDemo}
           </button>
           <a href="#/direct-from-farmer" class="c-btn c-btn-outline" style="font-weight:600; padding:0.75rem 1.25rem; border-radius:10px; text-decoration:none;">
-            Explore Public Marketplace
+            ${t.btnExploreMarket}
           </a>
         </div>
       </div>
@@ -1281,6 +1351,16 @@ function renderStep7LiveTracking(product, logistics, currentStage) {
 // EVENT LISTENERS FOR INTERACTIVE DEMO WORKFLOW
 // -------------------------------------------------------------
 export function attachDemoWorkflowListeners() {
+  // Multi-Language Pill Switcher Handlers
+  document.querySelectorAll('.demo-lang-pill-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const l = btn.getAttribute('data-lang');
+      if (l) {
+        store.setLanguage(l);
+      }
+    });
+  });
+
   // Step Jump Buttons
   document.querySelectorAll('.demo-step-jump-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -1292,6 +1372,114 @@ export function attachDemoWorkflowListeners() {
     });
   });
 
+  // Top Pitch Bar: 1-Click Fast Pitch
+  document.getElementById('demo-quick-preset-btn')?.addEventListener('click', () => {
+    store.updateDemoFarmer({
+      name: 'Rajesh Patil',
+      phone: '+91 98230 45120',
+      location: 'Pimpalgaon Baswant, Nashik, Maharashtra',
+      fpoName: 'Nashik Kisan Samruddhi Farmer Producer Co.',
+      crops: 'Hybrid Tomatoes, Lasalgaon Onions'
+    });
+    store.updateDemoProduct({
+      volume: 500,
+      askingPrice: 45,
+      title: 'Farm-Fresh Desi Hybrid Tomatoes (Grade-A Firm & Juicy)'
+    });
+    store.updateDemoNegotiation({
+      farmerAskingPrice: 45,
+      buyerInitialOffer: 41,
+      farmerCounterPrice: 43,
+      agreedPrice: 43,
+      totalAgreedAmount: 21500,
+      status: 'agreed'
+    });
+    store.setDemoTrackingStage(4);
+    store.setDemoStep(3);
+    store.showToast('1-Click Demo Fill: 500kg Tomatoes & AI Mandi Forecast Ready!', 'success');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Reset Workflow Button
+  document.getElementById('demo-reset-workflow-btn')?.addEventListener('click', () => {
+    store.resetDemoWorkflow();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Voice Guidance Audio Speech Synthesis for Rural & Illiterate Farmers
+  document.getElementById('demo-voice-advice-btn')?.addEventListener('click', () => {
+    const state = store.getState();
+    const lang = state.language || 'en';
+    const t = getTranslation(lang);
+    const textToSpeak = t.aiAdviceText || 'Nashik arrivals dropping next week. Best time to sell.';
+
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      
+      const langMap = {
+        mr: 'mr-IN',
+        hi: 'hi-IN',
+        pa: 'pa-IN',
+        en: 'en-IN'
+      };
+      utterance.lang = langMap[lang] || 'hi-IN';
+      utterance.rate = 0.9; // clear, comfortable listening speed for farmers
+
+      const btnText = document.getElementById('demo-voice-btn-text');
+      if (btnText) {
+        btnText.textContent = lang === 'mr' ? 'आवाज सुरू आहे...' : lang === 'hi' ? 'आवाज चल रहा है...' : 'Speaking Audio...';
+      }
+
+      utterance.onend = () => {
+        if (btnText) {
+          btnText.textContent = t.btnListenVoice;
+        }
+      };
+
+      utterance.onerror = () => {
+        if (btnText) {
+          btnText.textContent = t.btnListenVoice;
+        }
+      };
+
+      window.speechSynthesis.speak(utterance);
+      store.showToast(`Audio Guidance playing in ${lang.toUpperCase()} for farmer accessibility!`, 'info');
+    } else {
+      store.showToast('Voice Audio guidance simulated: ' + textToSpeak.substring(0, 60) + '...', 'info');
+    }
+  });
+
+  // Voice Guidance for Delivery Status (Step 7)
+  document.getElementById('demo-voice-status-btn')?.addEventListener('click', () => {
+    const state = store.getState();
+    const lang = state.language || 'en';
+    const t = getTranslation(lang);
+    const stage = state.demoTrackingStage || 1;
+    const stageTexts = [
+      t.milestone1Title,
+      t.milestone2Title,
+      t.milestone3Title,
+      t.milestone4Title,
+      t.milestone5Title,
+      t.milestone6Title,
+      t.milestone7Title,
+      t.milestone8Title
+    ];
+    const text = stageTexts[stage - 1] || 'Order in transit';
+
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      const langMap = { mr: 'mr-IN', hi: 'hi-IN', pa: 'pa-IN', en: 'en-IN' };
+      utterance.lang = langMap[lang] || 'hi-IN';
+      utterance.rate = 0.9;
+      window.speechSynthesis.speak(utterance);
+      store.showToast(`Status read aloud: ${text}`, 'info');
+    } else {
+      store.showToast(`Status: ${text}`, 'info');
+    }
+  });
 
   // STEP 1: Role Selection Listeners
   const selectFarmer = () => {
@@ -1399,7 +1587,7 @@ export function attachDemoWorkflowListeners() {
       description
     });
 
-    store.showToast('Produce published live to KISAN Marketplace!', 'success');
+    store.showToast('Produce published live to Kisan Connect Marketplace!', 'success');
     store.setDemoStep(4);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });

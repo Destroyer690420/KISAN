@@ -182,6 +182,33 @@
   margin: 0 2px;
 }
 
+/* Language Selector Dropdown */
+.lang-selector-wrap {
+  position: relative;
+}
+
+.lang-dropdown-menu {
+  animation: fadeIn 0.15s ease-out;
+}
+
+.header-lang-option {
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.header-lang-option:hover {
+  background: #f0f7f6 !important;
+  color: #00665e !important;
+}
+
+.header-lang-option.active {
+  background: #eaf5f3 !important;
+  color: #00665e !important;
+}
+
+.mobile-lang-btn {
+  transition: all 0.15s ease;
+}
+
 .icon-btn {
   display: inline-flex;
   align-items: center;

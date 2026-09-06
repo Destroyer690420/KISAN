@@ -1,4 +1,5 @@
 import { store } from '../state/store.js';
+import { LANGUAGES, getTranslation } from '../i18n/translations.js';
 import {
   IconShoppingBag,
   IconBuilding,
@@ -17,10 +18,14 @@ import {
 
 export function renderHeader() {
   const state = store.getState();
+  const langCode = state.language || 'en';
+  const currentLang = LANGUAGES[langCode] || LANGUAGES.en;
+  const t = getTranslation(langCode);
+
   const region = state.selectedRegion;
   const cartCount = store.getCartCount();
   const isBulk = state.buyerMode === 'bulk';
-  const currentHash = window.location.hash || '#/';
+  const currentHash = (typeof window !== 'undefined' && window.location?.hash) ? window.location.hash : '#/';
 
   const isMarketActive = currentHash.startsWith('#/direct-from-farmer');
   const isBulkActive = currentHash.startsWith('#/bulk');
@@ -39,20 +44,20 @@ export function renderHeader() {
         <!-- Navigation Links -->
         <nav class="header-nav">
           <a href="#/direct-from-farmer" class="nav-link ${isMarketActive ? 'active' : ''}">
-            Marketplace
+            ${t.navMarketplace}
           </a>
           <a href="#/bulk" class="nav-link ${isBulkActive ? 'active' : ''}">
-            Bulk Sourcing
+            ${t.navBulk}
             <span class="nav-chip">B2B</span>
           </a>
           <a href="#/fpos" class="nav-link ${isFpoActive ? 'active' : ''}">
-            FPO Network
+            ${t.navFpos}
           </a>
           <a href="#/fair-pricing" class="nav-link ${isFairActive ? 'active' : ''}">
-            Price Index
+            ${t.navPriceIndex}
           </a>
           <a href="#/sell" class="nav-link ${isSellActive ? 'active' : ''}" style="color:#00665e;">
-            Sell Direct
+            ${t.navSellDirect}
           </a>
         </nav>
 
@@ -77,6 +82,23 @@ export function renderHeader() {
             <span style="color:#94a3b8; display:flex; align-items:center;">${IconChevronDown(11)}</span>
           </button>
 
+          <!-- Language Selector Pill Dropdown -->
+          <div class="lang-selector-wrap" style="position:relative;">
+            <button id="header-lang-btn" class="header-loc-btn" title="Select Indian Language (भाषा निवडा)" style="font-weight:700; font-size:0.8rem; gap:5px; padding:0.4rem 0.65rem;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#00665e;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <span>${currentLang.nativeName}</span>
+              <span style="color:#94a3b8; display:flex; align-items:center;">${IconChevronDown(11)}</span>
+            </button>
+            <div id="header-lang-menu" class="lang-dropdown-menu" style="display:none; position:absolute; right:0; top:calc(100% + 6px); background:#ffffff; border:1px solid #d5e4e2; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.12); min-width:130px; z-index:1100; overflow:hidden; padding:4px;">
+              ${Object.values(LANGUAGES).map(l => `
+                <button class="header-lang-option ${l.code === langCode ? 'active' : ''}" data-lang="${l.code}" style="width:100%; text-align:left; background:${l.code === langCode ? '#eaf5f3' : 'none'}; color:${l.code === langCode ? '#00665e' : '#1a2e2b'}; font-weight:${l.code === langCode ? '800' : '600'}; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-size:0.82rem; display:flex; justify-content:space-between; align-items:center;">
+                  <span>${l.nativeName}</span>
+                  <span style="font-size:0.7rem; color:#889694;">${l.code.toUpperCase()}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+
           <div class="header-sep hide-on-mobile"></div>
 
           <!-- Search Button -->
@@ -87,7 +109,7 @@ export function renderHeader() {
           <!-- Demo Button -->
           <a href="#/demo" class="c-btn c-btn-primary c-btn-sm judge-demo-nav-btn" title="Interactive 7-Step Demo Workflow" style="padding:0.38rem 0.85rem; font-size:0.8rem; font-weight:700; border-radius:999px; gap:6px; display:inline-flex; align-items:center; background:#00665e; color:#ffffff; text-decoration:none; box-shadow:0 2px 8px rgba(0,102,94,0.25);">
             <span style="display:flex; align-items:center;">${IconPlay(12)}</span>
-            <span>Demo</span>
+            <span>${t.navJudgeDemo}</span>
             <span class="nav-chip" style="background:#00332e; color:#9ce9df; font-size:0.62rem; padding:1px 5px; letter-spacing:0.5px;">LIVE</span>
           </a>
 
@@ -122,7 +144,7 @@ export function renderHeader() {
           </button>
         </div>
         <div class="cart-drawer-body">
-          <div style="padding:0.75rem 0; margin-bottom:1rem; border-bottom:1px solid #eef2f2;">
+          <div style="padding:0.75rem 0; margin-bottom:0.75rem; border-bottom:1px solid #eef2f2;">
             <div style="font-size:0.75rem; font-weight:700; color:#7d8483; margin-bottom:0.5rem; text-transform:uppercase;">Select Buyer Mode:</div>
             <div style="display:flex; gap:0.5rem;">
               <button id="mobile-toggle-retail" class="c-btn ${!isBulk ? 'c-btn-primary' : 'c-btn-outline'} c-btn-sm" style="flex:1; display:flex; align-items:center; justify-content:center; gap:6px;">
@@ -131,6 +153,17 @@ export function renderHeader() {
               <button id="mobile-toggle-bulk" class="c-btn ${isBulk ? 'c-btn-primary' : 'c-btn-outline'} c-btn-sm" style="flex:1; display:flex; align-items:center; justify-content:center; gap:6px;">
                 ${IconBuilding(14)} Bulk B2B
               </button>
+            </div>
+          </div>
+          <!-- Mobile Language Selector -->
+          <div style="padding:0.6rem 0; margin-bottom:0.75rem; border-bottom:1px solid #eef2f2;">
+            <div style="font-size:0.72rem; font-weight:700; color:#7d8483; margin-bottom:0.4rem; text-transform:uppercase;">Select Language / भाषा निवडा:</div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.4rem;">
+              ${Object.values(LANGUAGES).map(l => `
+                <button class="mobile-lang-btn ${l.code === langCode ? 'c-btn-primary' : 'c-btn-outline'} c-btn c-btn-sm" data-lang="${l.code}" style="font-size:0.8rem; padding:0.4rem 0.5rem; justify-content:center;">
+                  ${l.nativeName}
+                </button>
+              `).join('')}
             </div>
           </div>
           <!-- Judge Demo Card for Hackathon Presentation -->
@@ -249,5 +282,40 @@ export function attachHeaderListeners() {
     } else {
       store.setAuthModalOpen(true);
     }
+  });
+
+  // Language Selection Handlers
+  const langBtn = document.getElementById('header-lang-btn');
+  const langMenu = document.getElementById('header-lang-menu');
+  langBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (langMenu) {
+      langMenu.style.display = langMenu.style.display === 'none' ? 'block' : 'none';
+    }
+  });
+
+  document.addEventListener('click', () => {
+    if (langMenu) langMenu.style.display = 'none';
+  });
+
+  document.querySelectorAll('.header-lang-option').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const l = btn.getAttribute('data-lang');
+      if (l) {
+        store.setLanguage(l);
+        if (langMenu) langMenu.style.display = 'none';
+      }
+    });
+  });
+
+  document.querySelectorAll('.mobile-lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const l = btn.getAttribute('data-lang');
+      if (l) {
+        store.setLanguage(l);
+        closeMenu();
+      }
+    });
   });
 }
