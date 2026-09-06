@@ -9,12 +9,15 @@ export function renderFooter() {
   const hash = window.location.hash || '#/';
   const pathWithoutHash = hash.replace(/^#\/?/, '/');
   const [pathname] = pathWithoutHash.split('?');
-  const isDemo = pathname === '/demo' || pathname === '/judge-demo' || pathname === '/workflow';
+  const isDemo = pathname === '/demo' || pathname.startsWith('/demo') || pathname === '/judge-demo' || pathname === '/workflow';
+
+  if (isDemo) {
+    return '';
+  }
 
   return `
     <footer class="site-footer">
       <div class="container">
-        ${!isDemo ? `
         <!-- Top Newsletter / Values banner -->
         <div style="background-color:#00332e; color:#ffffff; border-radius:1.5rem; padding:3rem; margin-bottom:4rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:2rem;">
           <div style="max-width:560px;">
@@ -34,7 +37,6 @@ export function renderFooter() {
             <button type="submit" class="c-btn c-btn-secondary" style="font-weight:700;">Subscribe</button>
           </form>
         </div>
-        ` : ''}
 
         <div class="footer-grid">
           <!-- Col 1: Brand & Mission -->
