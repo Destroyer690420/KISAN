@@ -40,64 +40,7 @@ export function renderDemoWorkflowPage() {
     <div class="demo-workflow-wrapper" style="background:#f8faf9; min-height:90vh; padding:2rem 0 5rem;">
       <div class="container" style="max-width:1160px; margin:0 auto; padding:0 1.25rem;">
         
-        <!-- Top Pitch Bar for Hackathon Judges -->
-        <div class="demo-judge-pitch-card" style="background:linear-gradient(135deg, #00332e 0%, #004c46 50%, #00665e 100%); color:#ffffff; border-radius:18px; padding:1.75rem 2rem; margin-bottom:2rem; box-shadow:0 12px 32px rgba(0,51,46,0.22); position:relative; overflow:hidden;">
-          <div style="position:absolute; right:-20px; top:-20px; width:220px; height:220px; background:radial-gradient(circle, rgba(156,233,223,0.18) 0%, rgba(255,255,255,0) 70%); border-radius:50%; pointer-events:none;"></div>
-          
-          <div style="position:relative; z-index:1;">
-            <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1.25rem; margin-bottom:1rem;">
-              <div>
-                <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25); padding:4px 12px; border-radius:999px; font-size:0.75rem; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; margin-bottom:0.75rem;">
-                  <span style="display:flex; align-items:center; color:#9ce9df;">${IconSparkles(13)}</span>
-                  <span>${t.demoPitchBadge}</span>
-                </div>
-                <h1 style="font-size:1.85rem; font-weight:800; line-height:1.25; margin-bottom:0.4rem; color:#ffffff;">
-                  ${t.demoPitchTitle}
-                </h1>
-                <p style="font-size:0.95rem; color:#d1e8e5; max-width:760px; margin:0; line-height:1.5;">
-                  ${t.demoPitchDesc}
-                </p>
-              </div>
 
-              <div style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:center;">
-                <button id="demo-quick-preset-btn" class="c-btn" style="background:#ffffff; color:#004c46; font-weight:700; font-size:0.85rem; padding:0.6rem 1.1rem; border-radius:10px; border:none; box-shadow:0 4px 12px rgba(0,0,0,0.15); display:inline-flex; align-items:center; gap:6px; cursor:pointer;">
-                  ${IconPlay(14)}
-                  <span>${t.demoFastPitchBtn}</span>
-                </button>
-                <button id="demo-reset-workflow-btn" class="c-btn" style="background:rgba(255,255,255,0.15); color:#ffffff; font-weight:600; font-size:0.85rem; padding:0.6rem 1rem; border-radius:10px; border:1px solid rgba(255,255,255,0.3); display:inline-flex; align-items:center; gap:6px; cursor:pointer;" title="Restart flow from Step 1">
-                  ${IconRotateCcw(14)}
-                  <span>${t.demoResetBtn}</span>
-                </button>
-              </div>
-            </div>
-
-            <!-- Prominent Multi-Language Selector Bar (Directly solves uneducated/regional farmer accessibility) -->
-            <div class="demo-lang-bar" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.22); border-radius:12px; padding:0.7rem 1.15rem; margin-top:1.25rem;">
-              <div style="display:flex; align-items:center; gap:8px;">
-                <span style="display:flex; align-items:center; color:#9ce9df;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                </span>
-                <span style="font-size:0.85rem; font-weight:800; color:#ffffff;">
-                  ${t.demoLangSelectorTitle}
-                </span>
-              </div>
-
-              <div style="display:flex; flex-wrap:wrap; gap:6px;">
-                ${Object.values(LANGUAGES).map(l => `
-                  <button class="demo-lang-pill-btn ${l.code === langCode ? 'active' : ''}" data-lang="${l.code}" style="background:${l.code === langCode ? '#ffffff' : 'rgba(255,255,255,0.12)'}; color:${l.code === langCode ? '#004c46' : '#ffffff'}; font-weight:${l.code === langCode ? '900' : '600'}; border:none; padding:5px 14px; border-radius:999px; font-size:0.82rem; cursor:pointer; transition:all 0.15s; box-shadow:${l.code === langCode ? '0 2px 8px rgba(0,0,0,0.2)' : 'none'};">
-                    ${l.nativeName}
-                  </button>
-                `).join('')}
-              </div>
-
-              <div style="display:inline-flex; align-items:center; gap:6px; background:rgba(156,233,223,0.15); border:1px solid rgba(156,233,223,0.3); border-radius:999px; padding:3px 10px; font-size:0.72rem; color:#9ce9df; font-weight:700;">
-                <span>${IconShield(12)}</span>
-                <span>${t.demoAccessibilityBadge}</span>
-              </div>
-            </div>
-
-          </div>
-        </div>
 
         <!-- 7-Step Navigation Bar -->
         <div class="demo-stepper-container" style="background:#ffffff; border:1px solid #e2ecea; border-radius:16px; padding:1rem 1.25rem; margin-bottom:2rem; box-shadow:0 4px 16px rgba(0,0,0,0.03); overflow-x:auto;">
@@ -1351,16 +1294,6 @@ function renderStep7LiveTracking(product, logistics, currentStage, t, langCode) 
 // EVENT LISTENERS FOR INTERACTIVE DEMO WORKFLOW
 // -------------------------------------------------------------
 export function attachDemoWorkflowListeners() {
-  // Multi-Language Pill Switcher Handlers
-  document.querySelectorAll('.demo-lang-pill-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const l = btn.getAttribute('data-lang');
-      if (l) {
-        store.setLanguage(l);
-      }
-    });
-  });
-
   // Step Jump Buttons
   document.querySelectorAll('.demo-step-jump-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -1370,40 +1303,6 @@ export function attachDemoWorkflowListeners() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     });
-  });
-
-  // Top Pitch Bar: 1-Click Fast Pitch
-  document.getElementById('demo-quick-preset-btn')?.addEventListener('click', () => {
-    store.updateDemoFarmer({
-      name: 'Rajesh Patil',
-      phone: '+91 98230 45120',
-      location: 'Pimpalgaon Baswant, Nashik, Maharashtra',
-      fpoName: 'Nashik Kisan Samruddhi Farmer Producer Co.',
-      crops: 'Hybrid Tomatoes, Lasalgaon Onions'
-    });
-    store.updateDemoProduct({
-      volume: 500,
-      askingPrice: 45,
-      title: 'Farm-Fresh Desi Hybrid Tomatoes (Grade-A Firm & Juicy)'
-    });
-    store.updateDemoNegotiation({
-      farmerAskingPrice: 45,
-      buyerInitialOffer: 41,
-      farmerCounterPrice: 43,
-      agreedPrice: 43,
-      totalAgreedAmount: 21500,
-      status: 'agreed'
-    });
-    store.setDemoTrackingStage(4);
-    store.setDemoStep(3);
-    store.showToast('1-Click Demo Fill: 500kg Tomatoes & AI Mandi Forecast Ready!', 'success');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  // Reset Workflow Button
-  document.getElementById('demo-reset-workflow-btn')?.addEventListener('click', () => {
-    store.resetDemoWorkflow();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
   // Voice Guidance Audio Speech Synthesis for Rural & Illiterate Farmers
